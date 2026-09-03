@@ -26,7 +26,7 @@ This installs `check-tro` and hooks the check-and-report workflow to the consumi
 | [`exports/base-setup`](exports/base-setup) | Installs the validator, from `json-schema-dev`. |
 | [`exports/report-targets`](exports/report-targets), [`exports/report-makefile`](exports/report-makefile) | The `--report` profile: gives a consumer `make build-reports`. |
 | [`check-image`](check-image) | Asserts a built image has the commands its modules were required for. |
-| [`REVIEW.md`](REVIEW.md) | Who has read which version of which file. Generated. |
+| [`REVIEWS.md`](REVIEWS.md) | Who has read which version of which file. Generated. |
 
 ## Building, testing and extending
 
