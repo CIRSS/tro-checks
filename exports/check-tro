@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Check one TRO against every expectation and write the report.
+#
+#   check-tro <tro.jsonld> <report.md>
+
+set -u
+
+tro=$1
+report=$2
+
+module=$(dirname "$(readlink -f "$0")")
+
+failures=0
+
+{
+    echo "# Report"
+    echo
+    echo "Subject: \`$(basename "${tro}")\`, sha256 $(sha256sum "${tro}" | cut -c1-16)"
+    echo
+
+    for schema in "${module}"/*.schema.json ; do
+        expectation=$(basename "${schema}" .schema.json)
+
+        output=$(jsonschema-validate --schema "${schema}" --instance "${tro}" 2>&1)
+        status=$?
+
+        if [ ${status} -eq 0 ] ; then
+            echo "## ${expectation}: met"
+        else
+            echo "## ${expectation}: NOT MET"
+            failures=$((failures + 1))
+        fi
+
+        echo
+        echo '```'
+        echo "${output}"
+        echo '```'
+        echo
+    done
+} > "${report}"
+
+echo "wrote ${report}; ${failures} expectation(s) not met"

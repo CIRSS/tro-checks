@@ -1,0 +1,18 @@
+NODE_VERSION=22.11.0
+
+REPRO_NAME=tro-checks
+REPRO_DOCKER_ORG=cirss
+REPRO_IMAGE_TAG=latest
+
+PARENT_IMAGE=${REPRO_DOCKER_ORG}/${REPRO_NAME}-parent:latest
+
+PARENT_BUILD_ARG_1=${NODE_VERSION}
+
+DOCKER_BUILD_PROGRESS=plain
+
+image:                  build-image   ##
+start:                  start-repro   ##
+
+##
+
+-include .ai-coding-dev/host-makefile

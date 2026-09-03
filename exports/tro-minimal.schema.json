@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/tro-minimal.schema.json",
+    "title": "TRO minimal",
+    "type": "object",
+    "required": ["@context", "@graph"],
+    "errorMessage": {
+        "type": "a TRO declaration is a JSON object",
+        "required": {
+            "@context": "a TRO declaration declares an @context",
+            "@graph": "a TRO declaration carries its nodes in an @graph"
+        }
+    }
+}

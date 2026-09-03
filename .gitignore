@@ -1,0 +1,5 @@
+build
+dist
+.*
+!.gitignore
+!.ai-coding-dev/

@@ -1,0 +1,18 @@
+{"kind":"origin","path":"Makefile","origin":"vendor"}
+{"kind":"origin","path":"Makefile-tests","origin":"vendor"}
+{"kind":"origin","path":"REVIEW.md","origin":"generated"}
+{"kind":"review","path":"Dockerfile","blob":"0c948df926bd66707ba7edf981c09d906cea4f7c","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"Dockerfile-parent","blob":"0d27ccca0e85cfe18664dd61c320a379d139f97b","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":".gitignore","blob":"6b6dfd64f42a3e47a209d948e3c7b19c768e6b38","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"exports/base-manifest","blob":"d78ed24f3e2d7f5afe7a613c19d53a4267cb4147","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"exports/base-setup","blob":"84569aad91a9e988c7a133199d8f6ceb75f83828","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"exports/report-makefile","blob":"2afbe70c3bec9903a8eaf2b18e20d0321047b7be","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"exports/report-manifest","blob":"97ba5af31c6dfc1b9f2170260da1885e33c756b2","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"exports/report-targets","blob":"daaeed8f2d5add251489b3c8b41d4af2d78ebfb7","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"review","path":"exports/tro-minimal.schema.json","blob":"20b0125297d45b66f95884549e8fd406bf25faaf","by":"Timothy McPhillips","date":"2026-09-02","type":"cursory"}
+{"kind":"origin","path":".ai-coding-dev/.gitignore","origin":"vendor"}
+{"kind":"origin","path":".ai-coding-dev/reviews.jsonl","origin":"generated"}
+{"kind":"review","path":"repro-config","blob":"4924535ca4c298a9bb9e608469e198f0b90313ed","by":"Timothy McPhillips","date":"2026-09-02","type":"careful"}
+{"kind":"origin","path":"Makefile-tests","origin":"authored"}
+{"kind":"origin","path":"Makefile-tests","origin":"vendor"}
+{"kind":"review","path":"repro-config","blob":"15abba9cc1569229286f22b14a6fa93a66b9415e","by":"Timothy McPhillips","date":"2026-09-03","type":"careful"}

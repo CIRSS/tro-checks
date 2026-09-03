@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+#     make run-in-repro CMD='bash check-image'
+
+set -u
+
+fail=0
+
+have_command() {
+    command -v "$1" > /dev/null || { echo "MISSING command: $1"; fail=1; }
+}
+
+have_command check-tro
+have_command reviews
+
+if [ ${fail} -eq 0 ] ; then
+    echo "image is complete"
+fi
+
+exit ${fail}

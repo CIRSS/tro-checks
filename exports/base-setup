@@ -1,0 +1,1 @@
+repro.require json-schema-dev main ${CIRSS} --python
