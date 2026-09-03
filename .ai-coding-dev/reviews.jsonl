@@ -16,3 +16,4 @@
 {"kind":"origin","path":"Makefile-tests","origin":"authored"}
 {"kind":"origin","path":"Makefile-tests","origin":"vendor"}
 {"kind":"review","path":"repro-config","blob":"15abba9cc1569229286f22b14a6fa93a66b9415e","by":"Timothy McPhillips","date":"2026-09-03","type":"careful"}
+{"kind":"review","path":"README.md","blob":"b6ea786e3376d7e59fe78b4ed9993e92621e0c44","by":"Timothy McPhillips","date":"2026-09-03","type":"careful"}
