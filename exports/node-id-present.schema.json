@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/node-id-present.schema.json",
+    "title": "Node id present",
+    "description": "Every node object carries an @id. A node object with no @id becomes a blank node: the processor mints a label scoped to one parse, which nothing in the document text names and nothing outside it can reference. A missing @base makes every identifier resolve somewhere unintended and is repairable by anyone who knows where the document came from; a blank node cannot be repaired at all.",
+    "$defs": {
+        "isNodeObject": {
+            "type": "object",
+            "not": {
+                "anyOf": [
+                    { "required": ["@value"] },
+                    { "required": ["@list"] },
+                    { "required": ["@set"] }
+                ]
+            }
+        },
+        "node": {
+            "if": { "$ref": "#/$defs/isNodeObject" },
+            "then": {
+                "required": ["@id"],
+                "errorMessage": "node object with no @id -- it becomes a blank node, which nothing outside this document can reference",
+                "properties": { "@context": true },
+                "additionalProperties": { "$ref": "#/$defs/node" }
+            },
+            "else": {
+                "if": { "type": "array" },
+                "then": { "items": { "$ref": "#/$defs/node" } }
+            }
+        },
+        "documentRoot": {
+            "if": { "type": "object", "required": ["@graph"] },
+            "then": {
+                "properties": {
+                    "@context": true,
+                    "@graph": { "$ref": "#/$defs/node" }
+                },
+                "additionalProperties": { "$ref": "#/$defs/node" }
+            },
+            "else": { "$ref": "#/$defs/node" }
+        }
+    },
+    "$comment": "The outermost object of a document carrying @graph is a document object, not a node object, and needs no @id of its own. Everything inside it is swept.",
+    "$ref": "#/$defs/documentRoot"
+}
