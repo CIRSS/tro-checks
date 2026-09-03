@@ -1,5 +1,5 @@
 build-report:
-	check-tro ${REPRO_MNT}/tro.jsonld ${REPRO_MNT}/report.md
+	check-tros ${REPRO_MNT}/subjects ${REPRO_MNT}/reports
 
 clean-report:
-	rm -f ${REPRO_MNT}/report.md
+	rm -rf ${REPRO_MNT}/reports

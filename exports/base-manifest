@@ -1,5 +1,6 @@
 base-setup
 check-tro
+check-tros
 tro-minimal.schema.json
 context-base.schema.json
 hash-form.schema.json
