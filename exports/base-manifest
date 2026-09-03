@@ -1,3 +1,7 @@
 base-setup
 check-tro
 tro-minimal.schema.json
+context-base.schema.json
+hash-form.schema.json
+composition-fingerprint.schema.json
+trs-typed.schema.json

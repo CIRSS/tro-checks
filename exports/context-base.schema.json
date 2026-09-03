@@ -1,0 +1,34 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/context-base.schema.json",
+    "title": "Context base",
+    "description": "The @context declares an @base. A TRO declaration identifies its parts with relative @id values, which resolve against the document's base; with none declared, the base is wherever the document happens to sit, so the identifiers change when it moves.",
+    "type": "object",
+    "required": ["@context"],
+    "properties": {
+        "@context": {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "contains": {
+                    "type": "object",
+                    "required": ["@base"]
+                },
+                "errorMessage": {
+                    "contains": "no entry in the @context array declares an @base"
+                }
+            },
+            "else": {
+                "type": "object",
+                "required": ["@base"],
+                "errorMessage": {
+                    "required": "the @context declares no @base"
+                }
+            }
+        }
+    },
+    "errorMessage": {
+        "required": "the declaration has no @context, so it can declare no @base"
+    }
+}

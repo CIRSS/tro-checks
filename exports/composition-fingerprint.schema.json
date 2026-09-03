@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/composition-fingerprint.schema.json",
+    "title": "Composition fingerprint",
+    "description": "The composition carries a fingerprint. The fingerprint is the single value that stands for the whole set of composed artifacts, so a composition without one cannot be compared with another composition as a unit.",
+    "type": "object",
+    "properties": {
+        "@graph": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "trov:hasComposition": {
+                        "type": "object",
+                        "required": ["trov:hasFingerprint"],
+                        "errorMessage": {
+                            "required": "the composition carries no trov:hasFingerprint"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/trs-typed.schema.json",
+    "title": "TRS typed",
+    "description": "The system that assembled the TRO is typed trov:TrustedResearchSystem. Position locates the node in the JSON, and this schema uses it to get there; the graph has no positions, so the type is the only thing in the document saying what kind of node it is.",
+    "type": "object",
+    "properties": {
+        "@graph": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "trov:wasAssembledBy": {
+                        "type": "object",
+                        "required": ["@type"],
+                        "properties": {
+                            "@type": {
+                                "if": { "type": "array" },
+                                "then": {
+                                    "contains": { "const": "trov:TrustedResearchSystem" },
+                                    "errorMessage": {
+                                        "contains": "the assembling system's @type array does not include trov:TrustedResearchSystem"
+                                    }
+                                },
+                                "else": {
+                                    "const": "trov:TrustedResearchSystem",
+                                    "errorMessage": {
+                                        "const": "the assembling system is not typed trov:TrustedResearchSystem"
+                                    }
+                                }
+                            }
+                        },
+                        "errorMessage": {
+                            "required": "the assembling system carries no @type"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -19,3 +19,11 @@
 {"kind":"review","path":"README.md","blob":"b6ea786e3376d7e59fe78b4ed9993e92621e0c44","by":"Timothy McPhillips","date":"2026-09-03","type":"careful"}
 {"kind":"origin","path":"REVIEWS.md","origin":"generated"}
 {"kind":"review","path":"README.md","blob":"bfa2906a78ba27d1412939f78b6cb1707b980f54","by":"Timothy McPhillips","date":"2026-09-03","type":"careful"}
+{"kind":"review","path":"exports/context-base.schema.json","blob":"8c19f0a3a876632ff984f5d864a63ed4389e1457","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":"exports/hash-form.schema.json","blob":"cc245040e9e9313ef028b1eb3b31e34c65ab682c","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":"exports/composition-fingerprint.schema.json","blob":"7e3030e7ae8d6a7b22f462956cc86d28f314381a","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":"exports/trs-typed.schema.json","blob":"3db4be3b572d80f7b991dd7128590b0feba2c45a","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":"exports/base-manifest","blob":"b47edb4c0d1e4c793af7da98c54026cfa4b28568","by":"Timothy McPhillips","date":"2026-09-03","type":"careful"}
+{"kind":"review","path":"exports/check-tro","blob":"5ccf7a84f0f55fca14dc3f4942b9b09e119a427b","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":".gitignore","blob":"c4c56958a3d480f37bbd906ecfb0443e67e17866","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":"check-image","blob":"089c5822d5fe6cb56387b26354bd168bf673be26","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
