@@ -4,7 +4,7 @@ Takes a TRO declaration, checks it against a battery of expectations, and writes
 report saying which were met.
 
 A REPRO capability module. It holds the expectations and the runner; it holds no
-TRO. An organisation checking its own TROs requires this module and supplies the
+TRO. An organization checking its own TROs requires this module and supplies the
 document — see [`spec-tro-checks`](https://github.com/CIRSS/spec-tro-checks) for
 a worked example of such a repository.
 
@@ -26,12 +26,13 @@ This installs `check-tro` and `check-tros` and hooks the check-and-report workfl
 | [`exports/node-id-present.schema.json`](exports/node-id-present.schema.json) | Every node object carries an `@id`. |
 | [`exports/tro-minimal.schema.json`](exports/tro-minimal.schema.json) | The declaration is an object carrying `@context` and `@graph`. |
 | [`exports/trs-typed.schema.json`](exports/trs-typed.schema.json) | The system named by `trov:wasAssembledBy` is typed `trov:TrustedResearchSystem`. |
-| [`exports/check-tro`](exports/check-tro) | The runner. Applies every `*.schema.json` in the module directory to one document and writes the report. |
-| [`exports/check-tros`](exports/check-tros) | Runs `check-tro` over every `subjects/*.jsonld`, writing `reports/<name>.md` for each. |
+| [`exports/check-tro.js`](exports/check-tro.js) | The runner. Applies every `*.schema.json` in the module directory to one subject and writes the report. Installed as `check-tro`. |
+| [`exports/check-tros.js`](exports/check-tros.js) | Runs `check-tro` over every `subjects/*.jsonld`, writing `reports/<name>.md` for each. Installed as `check-tros`. |
 | [`exports/base-manifest`](exports/base-manifest) | What a consumer gets: the runner, the schemas, and the setup that installs the validator. |
 | [`exports/base-setup`](exports/base-setup) | Installs the validator, from `json-schema-dev`. |
 | [`exports/report-targets`](exports/report-targets), [`exports/report-makefile`](exports/report-makefile) | The `--report` profile: gives a consumer `make build-reports`. |
 | [`check-image`](check-image) | Asserts a built image has the commands its modules were required for. |
+| [`GLOSSARY.md`](GLOSSARY.md) | The key entities the tools in this repository concern. |
 | [`CAPABILITIES.md`](CAPABILITIES.md) | The JSON Schema capabilities the expectations use, each with its demo in [`json-schema-demos`](https://github.com/CIRSS/json-schema-demos). |
 | [`REVIEWS.md`](REVIEWS.md) | Who has read which version of which file. Generated. |
 
