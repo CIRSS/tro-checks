@@ -27,3 +27,11 @@
 {"kind":"review","path":"exports/check-tro","blob":"5ccf7a84f0f55fca14dc3f4942b9b09e119a427b","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
 {"kind":"review","path":".gitignore","blob":"c4c56958a3d480f37bbd906ecfb0443e67e17866","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
 {"kind":"review","path":"check-image","blob":"089c5822d5fe6cb56387b26354bd168bf673be26","by":"Timothy McPhillips","date":"2026-09-03","type":"cursory"}
+{"kind":"review","path":"exports/node-id-present.schema.json","blob":"22bb39108b889c033a597c33c948f95c160eafea","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
+{"kind":"review","path":"CAPABILITIES.md","blob":"ebdba0965b1affd7db71518e6d5d802aec89ec76","by":"Timothy McPhillips","date":"2026-09-04","type":"careful"}
+{"kind":"review","path":"CAPABILITIES.md","blob":"fc0dd0e72e5cb630e9918023002ce963de854ac6","by":"Timothy McPhillips","date":"2026-09-04","type":"careful"}
+{"kind":"review","path":"README.md","blob":"b9cfb133d1fdc8f9a0e84dbf762e84eb38ea79c7","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
+{"kind":"review","path":"repro-config","blob":"d5968d528abfe11b898b6c2596b6fadc3c6fec2c","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
+{"kind":"review","path":"exports/base-manifest","blob":"541cec6f439ff85c8f9cf341a3858eedcbc8d31e","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
+{"kind":"review","path":"exports/report-makefile","blob":"066c33a15bbada0bdd660e7784a094b17ed503c4","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
+{"kind":"review","path":"exports/check-tros","blob":"52ab13a7916974eaf92cefde145910ac179e4673","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}

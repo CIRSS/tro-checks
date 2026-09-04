@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://w3id.org/trace/tro/0.1/node-id-present.schema.json",
     "title": "Node id present",
-    "description": "Every node object carries an @id. A node object with no @id becomes a blank node: the processor mints a label scoped to one parse, which nothing in the document text names and nothing outside it can reference. A missing @base makes every identifier resolve somewhere unintended and is repairable by anyone who knows where the document came from; a blank node cannot be repaired at all.",
+    "description": "Every node object is expected to carry an explicit @id. A node object with no @id becomes a blank node: the processor mints a label scoped to one parse, which nothing in the document text names and nothing outside it can reference.",
     "$defs": {
         "isNodeObject": {
             "type": "object",

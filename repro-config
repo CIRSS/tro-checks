@@ -16,3 +16,11 @@ start:                  start-repro   ##
 ##
 
 -include .ai-coding-dev/host-makefile
+
+# Local stand-in until this target lives in ai-coding-dev/host-makefile.
+# Calls that module's own review recipe in the trim directory: the REPRO
+# target mapping is baked into the image and cannot be extended here.
+.PHONY: update-reviews
+## update-reviews:    Update REVIEWS.md without running the other reports.
+update-reviews: session
+	$(RUN_IN_REPRO) 'make -C ${REPRO_MNT}/.ai-coding-dev -f report-makefile review'

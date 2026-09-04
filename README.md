@@ -14,18 +14,25 @@ To include `tro-checks` in a consuming repro add this line to its Dockerfile:
 RUN repro.require tro-checks main ${CIRSS} --report
 ```
 
-This installs `check-tro` and hooks the check-and-report workflow to the consuming REPRO's `build-reports` make target. Issuing `make build-reports` in that repro will check its `tro.jsonld` and write the results to its `report.md`.
+This installs `check-tro` and `check-tros` and hooks the check-and-report workflow to the consuming REPRO's `build-reports` make target. Issuing `make build-reports` in that repro will check every `subjects/*.jsonld` and write a `reports/<name>.md` for each.
 
 ## Key files
 
 | File | What it is |
 | --- | --- |
-| [`exports/tro-minimal.schema.json`](exports/tro-minimal.schema.json) | The one expectation so far: a TRO declaration is an object carrying `@context` and `@graph`. |
+| [`exports/composition-fingerprint.schema.json`](exports/composition-fingerprint.schema.json) | The composition carries a `trov:hasFingerprint`. |
+| [`exports/context-base.schema.json`](exports/context-base.schema.json) | The `@context` declares an `@base`. |
+| [`exports/hash-form.schema.json`](exports/hash-form.schema.json) | Every hash names `sha256` and carries 64 lowercase hexadecimal digits. |
+| [`exports/node-id-present.schema.json`](exports/node-id-present.schema.json) | Every node object carries an `@id`. |
+| [`exports/tro-minimal.schema.json`](exports/tro-minimal.schema.json) | The declaration is an object carrying `@context` and `@graph`. |
+| [`exports/trs-typed.schema.json`](exports/trs-typed.schema.json) | The system named by `trov:wasAssembledBy` is typed `trov:TrustedResearchSystem`. |
 | [`exports/check-tro`](exports/check-tro) | The runner. Applies every `*.schema.json` in the module directory to one document and writes the report. |
+| [`exports/check-tros`](exports/check-tros) | Runs `check-tro` over every `subjects/*.jsonld`, writing `reports/<name>.md` for each. |
 | [`exports/base-manifest`](exports/base-manifest) | What a consumer gets: the runner, the schemas, and the setup that installs the validator. |
 | [`exports/base-setup`](exports/base-setup) | Installs the validator, from `json-schema-dev`. |
 | [`exports/report-targets`](exports/report-targets), [`exports/report-makefile`](exports/report-makefile) | The `--report` profile: gives a consumer `make build-reports`. |
 | [`check-image`](check-image) | Asserts a built image has the commands its modules were required for. |
+| [`CAPABILITIES.md`](CAPABILITIES.md) | The JSON Schema capabilities the expectations use, each with its demo in [`json-schema-demos`](https://github.com/CIRSS/json-schema-demos). |
 | [`REVIEWS.md`](REVIEWS.md) | Who has read which version of which file. Generated. |
 
 ## Building, testing and extending
