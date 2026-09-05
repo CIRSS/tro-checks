@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //
-// Check one subject against every expectation and write the report.
+// Check one candidate against every expectation and write the report.
 //
 //   check-tro <tro.jsonld> <report.md>
 //
@@ -15,8 +15,6 @@ const path = require('node:path')
 
 const VALIDATORS = ['jsonschema-validate', 'ajv-validate']
 
-// json-schema-dev's exit-status contract, which check-tro reads from the
-// validators and then answers in itself.
 const STATUS = {
     VALID: 0,
     INVALID: 1,
@@ -79,27 +77,25 @@ function runValidator(validator, schema, instance) {
     }
 }
 
-// Disagreement is never held against the subject. It says the expectation
-// admits two readings, which is ours to fix.
 function outcomeOf(runs) {
     if (runs.some(errored)) return unresolved('the run failed')
     if (disagree(runs)) return unresolved('the validators disagree')
     return { outcome: runs.every(valid) ? EXPECTATION.MET : EXPECTATION.UNMET }
 }
 
-function checkExpectation(expectation, subjectPath) {
+function checkExpectation(expectation, candidatePath) {
     const runs = VALIDATORS.map((validator) =>
-        runValidator(validator, path.join(expectationsDirectory, expectation), subjectPath)
+        runValidator(validator, path.join(expectationsDirectory, expectation), candidatePath)
     )
     const { outcome, reason } = outcomeOf(runs)
     return { expectation: path.basename(expectation, '.schema.json'), outcome, reason, runs }
 }
 
-function loadSubject(subjectPath) {
-    const contents = read(subjectPath)
+function loadCandidate(candidatePath) {
+    const contents = read(candidatePath)
     return {
-        file: subjectPath,
-        name: path.basename(subjectPath),
+        file: candidatePath,
+        name: path.basename(candidatePath),
         digest: crypto.createHash('sha256').update(contents).digest('hex'),
     }
 }
@@ -110,8 +106,6 @@ function renderOutcome({ outcome, reason }) {
     return reason ? `${outcome}: ${reason}` : outcome
 }
 
-// Both legs, labeled: they report the same finding at different granularity and
-// neither rendering is the authoritative one.
 function renderEvidence(finding) {
     const lines = []
     for (const run of finding.runs) {
@@ -120,11 +114,11 @@ function renderEvidence(finding) {
     return lines
 }
 
-function renderReport(subject, findings) {
+function renderReport(candidate, findings) {
     const lines = [
         '# Report',
         '',
-        `Subject: \`${subject.name}\`, sha256 ${subject.digest.slice(0, 16)}`,
+        `Candidate: \`${candidate.name}\`, sha256 ${candidate.digest.slice(0, 16)}`,
         '',
         `Every expectation below was put to both \`${VALIDATORS[0]}\` and \`${VALIDATORS[1]}\`.`,
         '',
@@ -144,12 +138,12 @@ function tally(findings) {
     return { unmet: counted(EXPECTATION.UNMET), unresolved: counted(EXPECTATION.UNRESOLVED) }
 }
 
-function checkSubject(subject) {
-    return findExpectations().map((expectation) => checkExpectation(expectation, subject.file))
+function checkCandidate(candidate) {
+    return findExpectations().map((expectation) => checkExpectation(expectation, candidate.file))
 }
 
-function writeReport(reportPath, subject, findings) {
-    write(reportPath, renderReport(subject, findings))
+function writeReport(reportPath, candidate, findings) {
+    write(reportPath, renderReport(candidate, findings))
     const { unmet, unresolved } = tally(findings)
     return { file: reportPath, unmet, unresolved }
 }
@@ -170,25 +164,22 @@ function cannotRun(message) {
 }
 
 function parseCommandLine() {
-    const [subjectPath, reportPath] = process.argv.slice(2)
-    if (!subjectPath || !reportPath) cannotRun('usage: check-tro <tro.jsonld> <report.md>')
-    return { subjectPath, reportPath }
+    const [candidatePath, reportPath] = process.argv.slice(2)
+    if (!candidatePath || !reportPath) cannotRun('usage: check-tro <tro.jsonld> <report.md>')
+    return { candidatePath, reportPath }
 }
 
 const announce = (line) => process.stdout.write(`${line}\n`)
 
 function main() {
-    const { subjectPath, reportPath } = parseCommandLine()
-    const subject = loadSubject(subjectPath)
-    const findings = checkSubject(subject)
-    const report = writeReport(reportPath, subject, findings)
+    const { candidatePath, reportPath } = parseCommandLine()
+    const candidate = loadCandidate(candidatePath)
+    const findings = checkCandidate(candidate)
+    const report = writeReport(reportPath, candidate, findings)
     announce(summarize(report))
     process.exit(exitStatus(report))
 }
 
-// A run that could not be made arrives here as an exception. Caught rather than
-// left to Node, which exits 1 on an uncaught exception -- the code for an unmet
-// expectation.
 if (require.main === module) {
     try {
         main()
@@ -197,4 +188,4 @@ if (require.main === module) {
     }
 }
 
-module.exports = { loadSubject, checkSubject, writeReport, summarize }
+module.exports = { loadCandidate, checkCandidate, writeReport, summarize }

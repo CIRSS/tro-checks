@@ -1,5 +1,5 @@
 build-report:
-	check-tros ${REPRO_MNT}/subjects ${REPRO_MNT}/reports
+	check-tros ${REPRO_MNT}/candidates ${REPRO_MNT}/reports
 
 clean-report:
 	rm -rf ${REPRO_MNT}/reports
