@@ -3,189 +3,134 @@
 // Check one candidate against every expectation and write the report.
 //
 //   check-tro <tro.jsonld> <report.md>
-//
-// check-tros requires this file rather than running it as a command, so that a
-// crash arrives as an exception instead of as an exit status indistinguishable
-// from an unmet expectation.
 
 const childProcess = require('node:child_process')
-const crypto = require('node:crypto')
 const fs = require('node:fs')
 const path = require('node:path')
 
 const VALIDATORS = ['jsonschema-validate', 'ajv-validate']
 
-const STATUS = {
-    VALID: 0,
-    INVALID: 1,
-    ERROR: 2,
-}
-
 const EXPECTATION = {
     MET: 'met',
     UNMET: 'unmet',
-    UNRESOLVED: 'unresolved',
+}
+
+const EXIT = {
+    ALL_MET: 0,
+    SOME_UNMET: 1,
+    COULD_NOT_CHECK: 2,
 }
 
 const expectationsDirectory = __dirname
 
-const valid = (run) => run.status === STATUS.VALID
-const errored = (run) => run.status === STATUS.ERROR
-const disagree = (runs) => runs.some((run) => run.status !== runs[0].status)
-const unresolved = (reason) => ({ outcome: EXPECTATION.UNRESOLVED, reason })
-const reasonFor = (error) => error.code || error.message
+module.exports = { checkCandidateAgainstExpectations, writeReport, summarizeInOneLine }
 
-function read(file) {
-    try {
-        return fs.readFileSync(file)
-    } catch (error) {
-        throw new Error(`cannot read ${file}: ${reasonFor(error)}`)
-    }
-}
-
-function write(file, text) {
-    try {
-        fs.writeFileSync(file, text)
-    } catch (error) {
-        throw new Error(`cannot write ${file}: ${reasonFor(error)}`)
-    }
-}
-
-function findExpectations() {
+/** @throws {Error} if the module's own directory cannot be listed. */
+function findExpectationFiles() {
     return fs
         .readdirSync(expectationsDirectory)
         .filter((name) => name.endsWith('.schema.json'))
         .sort()
+        .map((name) => path.join(expectationsDirectory, name))
 }
 
-function runValidator(validator, schema, instance) {
-    const completed = childProcess.spawnSync(
+/** @throws {Error} if the validator cannot be run, is killed, or answers with an unrecognized exit status. */
+function askValidator(validator, expectationPath, candidatePath) {
+    const childResult = childProcess.spawnSync(
         validator,
-        ['--schema', schema, '--instance', instance],
+        ['--schema', expectationPath, '--instance', candidatePath],
         { encoding: 'utf8' }
     )
 
-    if (completed.error) {
-        return { validator, status: STATUS.ERROR, output: `${validator}: ${completed.error.message}` }
-    }
+    if (childResult.error) throw new Error(`${validator}: ${childResult.error.message}`)
 
-    const spoke = completed.status === STATUS.VALID || completed.status === STATUS.INVALID
+    const output = (childResult.stdout + childResult.stderr).replace(/\s+$/, '')
+    if (childResult.signal) throw new Error(`${validator}: killed by ${childResult.signal}\n${output}`)
+
+    switch (childResult.status) {
+        case 0: return { validator, valid: true, output }
+        case 1: return { validator, valid: false, output }
+        default: throw new Error(`${validator}: exit status ${childResult.status}\n${output}`)
+    }
+}
+
+/** @throws {Error} if either validator fails to answer. */
+function checkCandidateAgainstExpectation(candidatePath, expectationPath) {
+    const violated = (answer) => !answer.valid
+
+    const answers = VALIDATORS.map((validator) =>
+        askValidator(validator, expectationPath, candidatePath))
+
     return {
-        validator,
-        status: spoke ? completed.status : STATUS.ERROR,
-        output: [completed.stdout, completed.stderr].join('').replace(/\s+$/, ''),
+        expectation: path.basename(expectationPath, '.schema.json'),
+        outcome: answers.some(violated) ? EXPECTATION.UNMET : EXPECTATION.MET,
+        answers,
     }
 }
 
-function outcomeOf(runs) {
-    if (runs.some(errored)) return unresolved('the run failed')
-    if (disagree(runs)) return unresolved('the validators disagree')
-    return { outcome: runs.every(valid) ? EXPECTATION.MET : EXPECTATION.UNMET }
-}
-
-function checkExpectation(expectation, candidatePath) {
-    const runs = VALIDATORS.map((validator) =>
-        runValidator(validator, path.join(expectationsDirectory, expectation), candidatePath)
-    )
-    const { outcome, reason } = outcomeOf(runs)
-    return { expectation: path.basename(expectation, '.schema.json'), outcome, reason, runs }
-}
-
-function loadCandidate(candidatePath) {
-    const contents = read(candidatePath)
-    return {
-        file: candidatePath,
-        name: path.basename(candidatePath),
-        digest: crypto.createHash('sha256').update(contents).digest('hex'),
+function renderReportAsMarkdown(candidatePath, findings) {
+    const needsEvidence = (finding) => finding.outcome !== EXPECTATION.MET
+    const renderEvidenceAsLines = (finding) => {
+        const evidenceLines = []
+        for (const answer of finding.answers) {
+            evidenceLines.push(`\`${answer.validator}\`:`, '', '```', answer.output, '```', '')
+        }
+        return evidenceLines
     }
-}
 
-const needsEvidence = (finding) => finding.outcome !== EXPECTATION.MET
-
-function renderOutcome({ outcome, reason }) {
-    return reason ? `${outcome}: ${reason}` : outcome
-}
-
-function renderEvidence(finding) {
-    const lines = []
-    for (const run of finding.runs) {
-        lines.push(`\`${run.validator}\`:`, '', '```', run.output, '```', '')
-    }
-    return lines
-}
-
-function renderReport(candidate, findings) {
     const lines = [
         '# Report',
         '',
-        `Candidate: \`${candidate.name}\`, sha256 ${candidate.digest.slice(0, 16)}`,
+        `Candidate: \`${path.basename(candidatePath)}\``,
         '',
         `Every expectation below was put to both \`${VALIDATORS[0]}\` and \`${VALIDATORS[1]}\`.`,
         '',
     ]
 
     for (const finding of findings) {
-        lines.push(`## ${finding.expectation}: ${renderOutcome(finding)}`, '')
-        if (needsEvidence(finding)) lines.push(...renderEvidence(finding))
+        lines.push(`## ${finding.expectation}: ${finding.outcome}`, '')
+        if (needsEvidence(finding)) lines.push(...renderEvidenceAsLines(finding))
     }
 
     return lines.join('\n')
 }
 
-function tally(findings) {
-    const counted = (outcome) =>
-        findings.filter((finding) => finding.outcome === outcome).length
-    return { unmet: counted(EXPECTATION.UNMET), unresolved: counted(EXPECTATION.UNRESOLVED) }
+function unmetCount(findings) {
+    return findings.filter((finding) => finding.outcome === EXPECTATION.UNMET).length
 }
 
-function checkCandidate(candidate) {
-    return findExpectations().map((expectation) => checkExpectation(expectation, candidate.file))
+/** @throws {Error} if the expectations cannot be listed, or a validator fails to answer. */
+function checkCandidateAgainstExpectations(candidatePath) {
+    return findExpectationFiles().map((expectationPath) =>
+        checkCandidateAgainstExpectation(candidatePath, expectationPath))
 }
 
-function writeReport(reportPath, candidate, findings) {
-    write(reportPath, renderReport(candidate, findings))
-    const { unmet, unresolved } = tally(findings)
-    return { file: reportPath, unmet, unresolved }
+/** @throws {Error} if the report cannot be written. */
+function writeReport(reportPath, candidatePath, findings) {
+    fs.writeFileSync(reportPath, renderReportAsMarkdown(candidatePath, findings))
 }
 
-function summarize(report) {
-    return `wrote ${report.file}; ${report.unmet} unmet, ${report.unresolved} unresolved`
+function summarizeInOneLine(reportPath, findings) {
+    return `wrote ${reportPath}; ${unmetCount(findings)} unmet`
 }
 
-function exitStatus({ unmet, unresolved }) {
-    if (unresolved > 0) return STATUS.ERROR
-    if (unmet > 0) return STATUS.INVALID
-    return STATUS.VALID
+function exitStatusForFindings(findings) {
+    return unmetCount(findings) > 0 ? EXIT.SOME_UNMET : EXIT.ALL_MET
 }
 
-function cannotRun(message) {
-    process.stderr.write(`check-tro: ${message}\n`)
-    process.exit(STATUS.ERROR)
-}
-
-function parseCommandLine() {
-    const [candidatePath, reportPath] = process.argv.slice(2)
-    if (!candidatePath || !reportPath) cannotRun('usage: check-tro <tro.jsonld> <report.md>')
-    return { candidatePath, reportPath }
-}
-
-const announce = (line) => process.stdout.write(`${line}\n`)
-
-function main() {
-    const { candidatePath, reportPath } = parseCommandLine()
-    const candidate = loadCandidate(candidatePath)
-    const findings = checkCandidate(candidate)
-    const report = writeReport(reportPath, candidate, findings)
-    announce(summarize(report))
-    process.exit(exitStatus(report))
-}
-
-if (require.main === module) {
+function runAsCommand() {
     try {
-        main()
+        const [candidatePath, reportPath] = process.argv.slice(2)
+        if (!candidatePath || !reportPath) throw new Error('usage: check-tro <tro.jsonld> <report.md>')
+
+        const findings = checkCandidateAgainstExpectations(candidatePath)
+        writeReport(reportPath, candidatePath, findings)
+        process.stdout.write(`${summarizeInOneLine(reportPath, findings)}\n`)
+        return exitStatusForFindings(findings)
     } catch (error) {
-        cannotRun(error.message)
+        process.stderr.write(`check-tro: ${error.message}\n`)
+        return EXIT.COULD_NOT_CHECK
     }
 }
 
-module.exports = { loadCandidate, checkCandidate, writeReport, summarize }
+if (require.main === module) process.exitCode = runAsCommand()

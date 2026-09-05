@@ -40,3 +40,5 @@
 {"kind":"review","path":"exports/report-makefile","blob":"c085e00ec98c92113fff9e8c0a484910cbd27db8","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
 {"kind":"review","path":"exports/base-setup","blob":"b279dbbe5b76bf2b23d3ffd01ec842c9ce3d46f6","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
 {"kind":"review","path":"exports/base-manifest","blob":"abb26936c396b5ecde48a8b195e3e6256dede49b","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
+{"kind":"review","path":"exports/check-tro.js","blob":"c3827ad152d712d69d69caa58f135a0ac7f3955c","by":"Timothy McPhillips","date":"2026-09-05","type":"careful"}
+{"kind":"review","path":"exports/check-tros.js","blob":"8f9097a10f834606760900dabe4ea61ade18ecf1","by":"Timothy McPhillips","date":"2026-09-05","type":"careful"}
