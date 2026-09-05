@@ -35,3 +35,8 @@
 {"kind":"review","path":"exports/base-manifest","blob":"541cec6f439ff85c8f9cf341a3858eedcbc8d31e","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
 {"kind":"review","path":"exports/report-makefile","blob":"066c33a15bbada0bdd660e7784a094b17ed503c4","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
 {"kind":"review","path":"exports/check-tros","blob":"52ab13a7916974eaf92cefde145910ac179e4673","by":"Timothy McPhillips","date":"2026-09-04","type":"cursory"}
+{"kind":"review","path":"README.md","blob":"45fb34aedf2f0302abd63438b7846b868aec751b","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
+{"kind":"review","path":"GLOSSARY.md","blob":"f7c412c628b94518163c5c3b04f54303cc92b146","by":"Timothy McPhillips","date":"2026-09-05","type":"careful"}
+{"kind":"review","path":"exports/report-makefile","blob":"c085e00ec98c92113fff9e8c0a484910cbd27db8","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
+{"kind":"review","path":"exports/base-setup","blob":"b279dbbe5b76bf2b23d3ffd01ec842c9ce3d46f6","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
+{"kind":"review","path":"exports/base-manifest","blob":"abb26936c396b5ecde48a8b195e3e6256dede49b","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
