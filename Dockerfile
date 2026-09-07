@@ -12,6 +12,6 @@ USER repro
 
 RUN repro.require tro-checks exports
 
-RUN repro.require ai-coding-dev main ${CIRSS} --report
+RUN repro.require review-ledger main ${CIRSS} --report
 
 CMD  /bin/bash -il
