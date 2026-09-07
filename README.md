@@ -29,14 +29,17 @@ as `not claimed`.
 
 The tools are implemented and distributed for now as a REPRO capability module
 holding the expectations and the checker. Checking a particular TRO entails
-building and running a distinct REPRO that consumes this module and supplies the
-candidates — see [`spec-tro-checks`](https://github.com/CIRSS/spec-tro-checks)
+building and running a distinct REPRO that consumes this module and supplies
+the candidates — see
+[`spec-tro-checks`](https://github.com/transparency-certified/spec-tro-checks)
 for a worked example of such a repository.
 
-Include this line in the consuming REPRO's Dockerfile:
+Include these lines in the consuming REPRO's Dockerfile:
 
 ```
-RUN repro.require tro-checks main ${CIRSS} --report
+ENV TRACE 'https://raw.githubusercontent.com/transparency-certified/${1}/${2}/exports'
+
+RUN repro.require tro-checks main ${TRACE} --report
 ```
 
 This installs `check-tro` and `check-tros`, and hooks the check-and-report

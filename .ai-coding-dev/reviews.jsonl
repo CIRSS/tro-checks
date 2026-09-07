@@ -63,3 +63,5 @@
 {"kind":"review","path":"README.md","blob":"a12c1854a10c3ca273b9eb8d5c2c38bebd91ff26","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
 {"kind":"review","path":"exports/check-tro.js","blob":"1c6ad571732f0ee1e5689f7cecb48aebf88b0736","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
 {"kind":"review","path":"pseudocode/check-tro.md","blob":"6aef4fbbd4ccdcdad5df5166a31e61a8879bdc49","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"README.md","blob":"802d10af742bb2a16bece9c4b0be382f8d5f3049","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"repro-config","blob":"1d39bec4193bc8c92afd45f738b713556b9770bf","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
