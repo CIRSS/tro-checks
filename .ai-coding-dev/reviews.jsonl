@@ -57,3 +57,5 @@
 {"kind":"review","path":"exports/check-tro.js","blob":"1d5b24e7c451216c570798aca0553c52ed4581b8","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
 {"kind":"review","path":"pseudocode/check-tro.md","blob":"082e7c6ae2bf7d095a9ffb06b4d63255bcce49ea","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
 {"kind":"review","path":"pseudocode/check-tros.md","blob":"94d18cdd9125c7eb523ca4f1d2cad0f6881a5206","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"exports/check-tro.js","blob":"e1d957b4d75f05b99d4a9cae6c90ae2163d13a2d","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
+{"kind":"review","path":"pseudocode/check-tro.md","blob":"c1e09053533237180a950626bfd822f09e23f308","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}

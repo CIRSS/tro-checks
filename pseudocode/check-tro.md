@@ -65,7 +65,7 @@
 
 **The report gives the assessment of each tier at or below the one aimed at.**
 
-**The report says that every expectation in the target was put to both validators, and that one outside the target was not claimed.**
+**The report says that every expectation in the target was put to both validators.**
 
 **The report states every finding, giving...**
 - The expectation.

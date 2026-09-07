@@ -158,7 +158,6 @@ function renderReportAsMarkdown(candidate, findings, assessments) {
         '## Findings',
         '',
         `Every expectation in the target was put to ${namesOf(VALIDATORS)}.`,
-        'An expectation whose tier lies outside the target was not claimed.',
         '',
     )
 
