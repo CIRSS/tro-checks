@@ -1,0 +1,18 @@
+{
+    "1": {
+        "name": "Self-Contained",
+        "expectations": [
+            "composition-fingerprint",
+            "hash-form",
+            "tro-minimal",
+            "trs-typed"
+        ]
+    },
+    "2": {
+        "name": "Linkable-Data",
+        "expectations": [
+            "context-base",
+            "node-id-present"
+        ]
+    }
+}

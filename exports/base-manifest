@@ -1,6 +1,7 @@
 base-setup
 check-tro check-tro.js
 check-tros check-tros.js
+tiers.json
 tro-minimal.schema.json
 context-base.schema.json
 node-id-present.schema.json

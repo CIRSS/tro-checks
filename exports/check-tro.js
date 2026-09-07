@@ -1,18 +1,31 @@
 #!/usr/bin/env node
 //
-// Check one candidate against every expectation and write the report.
+// Check one candidate against the expectations in its target and write the report.
 //
-//   check-tro <tro.jsonld> <report.md>
+//   check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT]
 
 const childProcess = require('node:child_process')
+const { parseArgs } = require('node:util')
 const fs = require('node:fs')
 const path = require('node:path')
+
+module.exports = {
+    tierNumbered,
+    checkCandidateAgainstExpectations,
+    assessTiers,
+    writeReport,
+    summarizeInOneLine,
+}
+
+const USAGE =
+    'usage: check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT]'
 
 const VALIDATORS = ['jsonschema-validate', 'ajv-validate']
 
 const EXPECTATION = {
     MET: 'met',
     UNMET: 'unmet',
+    NOT_CLAIMED: 'not claimed',
 }
 
 const EXIT = {
@@ -21,9 +34,31 @@ const EXIT = {
     COULD_NOT_CHECK: 2,
 }
 
+const ASSUMED_TIER = '1'
+
 const expectationsDirectory = __dirname
 
-module.exports = { checkCandidateAgainstExpectations, writeReport, summarizeInOneLine }
+/** @throws {Error} if the tier definitions cannot be read or parsed. */
+function allTiers() {
+    const definitions = JSON.parse(
+        fs.readFileSync(path.join(expectationsDirectory, 'tiers.json'), 'utf8'))
+
+    return Object.keys(definitions)
+        .map((key) => ({ number: Number(key), ...definitions[key] }))
+        .sort((one, other) => one.number - other.number)
+}
+
+/** @throws {Error} if the tier definitions cannot be read, or name no such tier. */
+function tierNumbered(number) {
+    const tiers = allTiers()
+    const tier = tiers.find((each) => each.number === Number(number))
+
+    if (!tier) {
+        throw new Error(`no tier ${number}; the tiers are ${tiers.map((each) => each.number).join(', ')}`)
+    }
+
+    return tier
+}
 
 /** @throws {Error} if the module's own directory cannot be listed. */
 function findExpectationFiles() {
@@ -32,6 +67,13 @@ function findExpectationFiles() {
         .filter((name) => name.endsWith('.schema.json'))
         .sort()
         .map((name) => path.join(expectationsDirectory, name))
+}
+
+/** @throws {Error} if the expectation belongs to no tier. */
+function tierOfExpectation(tiers, expectation) {
+    const tier = tiers.find((each) => each.expectations.includes(expectation))
+    if (!tier) throw new Error(`${expectation} belongs to no tier`)
+    return tier
 }
 
 /** @throws {Error} if the validator cannot be run, is killed, or answers with an unrecognized exit status. */
@@ -62,14 +104,35 @@ function checkCandidateAgainstExpectation(candidatePath, expectationPath) {
         askValidator(validator, expectationPath, candidatePath))
 
     return {
-        expectation: path.basename(expectationPath, '.schema.json'),
         outcome: answers.some(violated) ? EXPECTATION.UNMET : EXPECTATION.MET,
         answers,
     }
 }
 
-function renderReportAsMarkdown(candidatePath, findings) {
-    const needsEvidence = (finding) => finding.outcome !== EXPECTATION.MET
+/** @throws {Error} if the expectations cannot be listed, one belongs to no tier, or a validator fails to answer. */
+function checkCandidateAgainstExpectations(candidate) {
+    const tiers = allTiers()
+
+    return findExpectationFiles().map((expectationPath) => {
+        const expectation = path.basename(expectationPath, '.schema.json')
+        const tier = tierOfExpectation(tiers, expectation)
+
+        return tier.number <= candidate.targetTier.number
+            ? { expectation, tier, ...checkCandidateAgainstExpectation(candidate.path, expectationPath) }
+            : { expectation, tier, outcome: EXPECTATION.NOT_CLAIMED, answers: [] }
+    })
+}
+
+function assessTiers(candidate, findings) {
+    const unmetIn = (tier) => findings.some(
+        (finding) => finding.tier.number === tier.number && finding.outcome === EXPECTATION.UNMET)
+
+    return allTiers()
+        .filter((tier) => tier.number <= candidate.targetTier.number)
+        .map((tier) => ({ tier, outcome: unmetIn(tier) ? EXPECTATION.UNMET : EXPECTATION.MET }))
+}
+
+function renderReportAsMarkdown(candidate, findings, assessments) {
     const renderEvidenceAsLines = (finding) => {
         const evidenceLines = []
         for (const answer of finding.answers) {
@@ -78,18 +141,40 @@ function renderReportAsMarkdown(candidatePath, findings) {
         return evidenceLines
     }
 
+    const stated = candidate.targetWasDeclared ? 'declared' : 'assumed'
+
     const lines = [
         '# Report',
         '',
-        `Candidate: \`${path.basename(candidatePath)}\``,
-        '',
-        `Every expectation below was put to both \`${VALIDATORS[0]}\` and \`${VALIDATORS[1]}\`.`,
+        `Candidate: \`${candidate.name}\``,
         '',
     ]
 
+    if (candidate.description) lines.push(candidate.description, '')
+
+    lines.push(
+        `Target: Tier ${candidate.targetTier.number} -- ${candidate.targetTier.name} (${stated})`,
+        '',
+        '## Assessment',
+        '',
+    )
+
+    for (const assessment of assessments) {
+        lines.push(`- Tier ${assessment.tier.number} -- ${assessment.tier.name}: ${assessment.outcome}`)
+    }
+
+    lines.push(
+        '',
+        '## Findings',
+        '',
+        `Every expectation in the target was put to both \`${VALIDATORS[0]}\` and \`${VALIDATORS[1]}\`.`,
+        'An expectation whose tier lies outside the target was not claimed.',
+        '',
+    )
+
     for (const finding of findings) {
-        lines.push(`## ${finding.expectation}: ${finding.outcome}`, '')
-        if (needsEvidence(finding)) lines.push(...renderEvidenceAsLines(finding))
+        lines.push(`### ${finding.expectation} (Tier ${finding.tier.number}): ${finding.outcome}`, '')
+        if (finding.outcome === EXPECTATION.UNMET) lines.push(...renderEvidenceAsLines(finding))
     }
 
     return lines.join('\n')
@@ -99,19 +184,18 @@ function unmetCount(findings) {
     return findings.filter((finding) => finding.outcome === EXPECTATION.UNMET).length
 }
 
-/** @throws {Error} if the expectations cannot be listed, or a validator fails to answer. */
-function checkCandidateAgainstExpectations(candidatePath) {
-    return findExpectationFiles().map((expectationPath) =>
-        checkCandidateAgainstExpectation(candidatePath, expectationPath))
-}
-
 /** @throws {Error} if the report cannot be written. */
-function writeReport(reportPath, candidatePath, findings) {
-    fs.writeFileSync(reportPath, renderReportAsMarkdown(candidatePath, findings))
+function writeReport(reportPath, candidate, findings, assessments) {
+    fs.writeFileSync(
+        reportPath,
+        renderReportAsMarkdown(candidate, findings, assessments))
 }
 
-function summarizeInOneLine(reportPath, findings) {
-    return `wrote ${reportPath}; ${unmetCount(findings)} unmet`
+function summarizeInOneLine(reportPath, assessments) {
+    const verdicts = assessments.map(
+        (assessment) => `Tier ${assessment.tier.number} ${assessment.outcome}`)
+
+    return `wrote ${reportPath}; ${verdicts.join(', ')}`
 }
 
 function exitStatusForFindings(findings) {
@@ -120,12 +204,39 @@ function exitStatusForFindings(findings) {
 
 function runAsCommand() {
     try {
-        const [candidatePath, reportPath] = process.argv.slice(2)
-        if (!candidatePath || !reportPath) throw new Error('usage: check-tro <tro.jsonld> <report.md>')
+        const optionValues = parseArgs({
+            args: process.argv.slice(2),
+            options: {
+                candidate: { type: 'string' },
+                report: { type: 'string' },
+                target: { type: 'string' },
+                description: { type: 'string' },
+            },
+            allowPositionals: false,
+        }).values
 
-        const findings = checkCandidateAgainstExpectations(candidatePath)
-        writeReport(reportPath, candidatePath, findings)
-        process.stdout.write(`${summarizeInOneLine(reportPath, findings)}\n`)
+        const candidatePath = optionValues.candidate
+        const reportPath = optionValues.report
+        if (!candidatePath || !reportPath) throw new Error(USAGE)
+
+        const targetWasDeclared = optionValues.target !== undefined
+        const targetTier = tierNumbered(targetWasDeclared ? optionValues.target : ASSUMED_TIER)
+        const candidateDescription = optionValues.description
+
+        const candidate = {
+            name: path.basename(candidatePath),
+            path: candidatePath,
+            description: candidateDescription,
+            targetTier,
+            targetWasDeclared,
+        }
+
+        const findings = checkCandidateAgainstExpectations(candidate)
+        const assessments = assessTiers(candidate, findings)
+
+        writeReport(reportPath, candidate, findings, assessments)
+        process.stdout.write(`${summarizeInOneLine(reportPath, assessments)}\n`)
+
         return exitStatusForFindings(findings)
     } catch (error) {
         process.stderr.write(`check-tro: ${error.message}\n`)

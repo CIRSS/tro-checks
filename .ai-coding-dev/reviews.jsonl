@@ -42,3 +42,13 @@
 {"kind":"review","path":"exports/base-manifest","blob":"abb26936c396b5ecde48a8b195e3e6256dede49b","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
 {"kind":"review","path":"exports/check-tro.js","blob":"c3827ad152d712d69d69caa58f135a0ac7f3955c","by":"Timothy McPhillips","date":"2026-09-05","type":"careful"}
 {"kind":"review","path":"exports/check-tros.js","blob":"8f9097a10f834606760900dabe4ea61ade18ecf1","by":"Timothy McPhillips","date":"2026-09-05","type":"careful"}
+{"kind":"review","path":"exports/tiers.json","blob":"57f7fe763d3b61ade45335c23a36e523c9a3fcde","by":"Timothy McPhillips","date":"2026-09-05","type":"careful"}
+{"kind":"review","path":"exports/base-manifest","blob":"1c1ae953172a39c0e880773f0e28ed4cddb127b5","by":"Timothy McPhillips","date":"2026-09-05","type":"cursory"}
+{"kind":"review","path":"exports/tiers.json","blob":"1b108e9b2c2baa34726c6c0d07b778bed8e6eb38","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"exports/tiers.json","blob":"00a5880c29e721097b3c5b89ff3daecfd05f5bcc","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"README.md","blob":"f720e7e672b1661082002255a19b83a251b13dbd","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"exports/report-makefile","blob":"e3deef8d742de70234c2350ec67664631f7f1fbf","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
+{"kind":"review","path":"pseudocode/check-tros.md","blob":"bb4bdc54af8521a9985c22e46f1a26e47d3038d3","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"pseudocode/check-tro.md","blob":"58dd6e6dcaf07eefcd9a8bd9a337a08da93c5caf","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"exports/check-tro.js","blob":"80e3bab6e68e766657d1a6112d4f27f99dae765b","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
+{"kind":"review","path":"exports/check-tros.js","blob":"b0590d71cb992cda4d6a06c9e8efccdf9ff717c1","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
