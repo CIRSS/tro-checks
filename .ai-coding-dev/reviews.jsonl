@@ -60,3 +60,6 @@
 {"kind":"review","path":"exports/check-tro.js","blob":"e1d957b4d75f05b99d4a9cae6c90ae2163d13a2d","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
 {"kind":"review","path":"pseudocode/check-tro.md","blob":"c1e09053533237180a950626bfd822f09e23f308","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
 {"kind":"review","path":"README.md","blob":"a12c1854a10c3ca273b9eb8d5c2c38bebd91ff26","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"README.md","blob":"a12c1854a10c3ca273b9eb8d5c2c38bebd91ff26","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
+{"kind":"review","path":"exports/check-tro.js","blob":"1c6ad571732f0ee1e5689f7cecb48aebf88b0736","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
+{"kind":"review","path":"pseudocode/check-tro.md","blob":"6aef4fbbd4ccdcdad5df5166a31e61a8879bdc49","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}

@@ -67,7 +67,7 @@
 
 **The report says that every expectation in the target was put to both validators.**
 
-**The report states every finding, giving...**
+**The report states every finding, in tier order and alphabetically within a tier, giving...**
 - The expectation.
 - Its tier.
 - Its outcome.

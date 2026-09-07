@@ -89,7 +89,7 @@ function askValidator(validator, expectationPath, candidatePath) {
 function checkCandidateAgainstExpectations(candidate) {
     const tiers = readTierDefinitions()
 
-    return findExpectationFiles().map((expectationPath) => {
+    const findings = findExpectationFiles().map((expectationPath) => {
         const expectation = path.basename(expectationPath, '.schema.json')
         const tier = tierOfExpectation(tiers, expectation)
 
@@ -107,6 +107,9 @@ function checkCandidateAgainstExpectations(candidate) {
             answers,
         }
     })
+
+    return findings.sort((one, other) =>
+        one.tier.number - other.tier.number || one.expectation.localeCompare(other.expectation))
 }
 
 function assessTiers(candidate, findings) {
