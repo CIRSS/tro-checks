@@ -51,8 +51,7 @@ manifest, so the key `spec-example-2026-04-08` selects
 {
     "spec-example-2026-04-08": {
         "target": 1,
-        "description": "What this candidate is. Copied into its report.",
-        "note": "For whoever maintains the manifest. Not copied anywhere."
+        "description": "What this candidate is. Copied into its report."
     }
 }
 ```
