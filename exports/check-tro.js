@@ -10,15 +10,12 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 module.exports = {
-    tierNumbered,
+    lookUpTier,
     checkCandidateAgainstExpectations,
     assessTiers,
     writeReport,
     summarizeInOneLine,
 }
-
-const USAGE =
-    'usage: check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT]'
 
 const VALIDATORS = ['jsonschema-validate', 'ajv-validate']
 
@@ -28,18 +25,10 @@ const EXPECTATION = {
     NOT_CLAIMED: 'not claimed',
 }
 
-const EXIT = {
-    ALL_MET: 0,
-    SOME_UNMET: 1,
-    COULD_NOT_CHECK: 2,
-}
-
-const ASSUMED_TIER = '1'
-
 const expectationsDirectory = __dirname
 
 /** @throws {Error} if the tier definitions cannot be read or parsed. */
-function allTiers() {
+function readTierDefinitions() {
     const definitions = JSON.parse(
         fs.readFileSync(path.join(expectationsDirectory, 'tiers.json'), 'utf8'))
 
@@ -49,8 +38,8 @@ function allTiers() {
 }
 
 /** @throws {Error} if the tier definitions cannot be read, or name no such tier. */
-function tierNumbered(number) {
-    const tiers = allTiers()
+function lookUpTier(number) {
+    const tiers = readTierDefinitions()
     const tier = tiers.find((each) => each.number === Number(number))
 
     if (!tier) {
@@ -96,30 +85,27 @@ function askValidator(validator, expectationPath, candidatePath) {
     }
 }
 
-/** @throws {Error} if either validator fails to answer. */
-function checkCandidateAgainstExpectation(candidatePath, expectationPath) {
-    const violated = (answer) => !answer.valid
-
-    const answers = VALIDATORS.map((validator) =>
-        askValidator(validator, expectationPath, candidatePath))
-
-    return {
-        outcome: answers.some(violated) ? EXPECTATION.UNMET : EXPECTATION.MET,
-        answers,
-    }
-}
-
 /** @throws {Error} if the expectations cannot be listed, one belongs to no tier, or a validator fails to answer. */
 function checkCandidateAgainstExpectations(candidate) {
-    const tiers = allTiers()
+    const tiers = readTierDefinitions()
 
     return findExpectationFiles().map((expectationPath) => {
         const expectation = path.basename(expectationPath, '.schema.json')
         const tier = tierOfExpectation(tiers, expectation)
 
-        return tier.number <= candidate.targetTier.number
-            ? { expectation, tier, ...checkCandidateAgainstExpectation(candidate.path, expectationPath) }
-            : { expectation, tier, outcome: EXPECTATION.NOT_CLAIMED, answers: [] }
+        if (tier.number > candidate.targetTier.number) {
+            return { expectation, tier, outcome: EXPECTATION.NOT_CLAIMED, answers: [] }
+        }
+
+        const answers = VALIDATORS.map((validator) =>
+            askValidator(validator, expectationPath, candidate.path))
+
+        return {
+            expectation,
+            tier,
+            outcome: answers.some((answer) => !answer.valid) ? EXPECTATION.UNMET : EXPECTATION.MET,
+            answers,
+        }
     })
 }
 
@@ -127,9 +113,13 @@ function assessTiers(candidate, findings) {
     const unmetIn = (tier) => findings.some(
         (finding) => finding.tier.number === tier.number && finding.outcome === EXPECTATION.UNMET)
 
-    return allTiers()
+    return readTierDefinitions()
         .filter((tier) => tier.number <= candidate.targetTier.number)
         .map((tier) => ({ tier, outcome: unmetIn(tier) ? EXPECTATION.UNMET : EXPECTATION.MET }))
+}
+
+function namesOf(validators) {
+    return validators.map((validator) => `\`${validator}\``).join(' and ')
 }
 
 function renderReportAsMarkdown(candidate, findings, assessments) {
@@ -146,7 +136,7 @@ function renderReportAsMarkdown(candidate, findings, assessments) {
     const lines = [
         '# Report',
         '',
-        `Candidate: \`${candidate.name}\``,
+        `Candidate: \`${candidate.fileName}\``,
         '',
     ]
 
@@ -167,7 +157,7 @@ function renderReportAsMarkdown(candidate, findings, assessments) {
         '',
         '## Findings',
         '',
-        `Every expectation in the target was put to both \`${VALIDATORS[0]}\` and \`${VALIDATORS[1]}\`.`,
+        `Every expectation in the target was put to ${namesOf(VALIDATORS)}.`,
         'An expectation whose tier lies outside the target was not claimed.',
         '',
     )
@@ -178,10 +168,6 @@ function renderReportAsMarkdown(candidate, findings, assessments) {
     }
 
     return lines.join('\n')
-}
-
-function unmetCount(findings) {
-    return findings.filter((finding) => finding.outcome === EXPECTATION.UNMET).length
 }
 
 /** @throws {Error} if the report cannot be written. */
@@ -198,8 +184,15 @@ function summarizeInOneLine(reportPath, assessments) {
     return `wrote ${reportPath}; ${verdicts.join(', ')}`
 }
 
-function exitStatusForFindings(findings) {
-    return unmetCount(findings) > 0 ? EXIT.SOME_UNMET : EXIT.ALL_MET
+const USAGE =
+    'usage: check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT]'
+
+const ASSUMED_TIER = '1'
+
+const EXIT = {
+    ALL_MET: 0,
+    SOME_UNMET: 1,
+    COULD_NOT_CHECK: 2,
 }
 
 function runAsCommand() {
@@ -220,11 +213,11 @@ function runAsCommand() {
         if (!candidatePath || !reportPath) throw new Error(USAGE)
 
         const targetWasDeclared = optionValues.target !== undefined
-        const targetTier = tierNumbered(targetWasDeclared ? optionValues.target : ASSUMED_TIER)
+        const targetTier = lookUpTier(targetWasDeclared ? optionValues.target : ASSUMED_TIER)
         const candidateDescription = optionValues.description
 
         const candidate = {
-            name: path.basename(candidatePath),
+            fileName: path.basename(candidatePath),
             path: candidatePath,
             description: candidateDescription,
             targetTier,
@@ -237,7 +230,9 @@ function runAsCommand() {
         writeReport(reportPath, candidate, findings, assessments)
         process.stdout.write(`${summarizeInOneLine(reportPath, assessments)}\n`)
 
-        return exitStatusForFindings(findings)
+        return findings.some((finding) => finding.outcome === EXPECTATION.UNMET)
+            ? EXIT.SOME_UNMET
+            : EXIT.ALL_MET
     } catch (error) {
         process.stderr.write(`check-tro: ${error.message}\n`)
         return EXIT.COULD_NOT_CHECK

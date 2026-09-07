@@ -14,7 +14,7 @@
 - It settles which tier was meant — the one asked for, or tier 1.
   - It reads the tier definitions the module ships.
   - It stops if no tier answers to that number.
-- It names the candidate after the file it sits in.
+- It notes the name of the file the candidate sits in.
 - It records whether the tier was asked for or assumed.
 
 **The program checks the candidate against each expectation in the target.**

@@ -12,14 +12,11 @@ const path = require('node:path')
 
 const checkTro = require('./check-tro.js')
 
-const USAGE = 'usage: check-tros --candidates DIR --reports DIR [--target TIER]'
-const ASSUMED_TIER = '1'
-
 const CANDIDATE_SUFFIX = '.jsonld'
 const MANIFEST_NAME = 'manifest.json'
 
 /** @throws {Error} if the directory or the manifest is missing, the manifest cannot be read or parsed, or it names no candidates. */
-function readManifest(candidatesDirectory) {
+function readCandidatesManifest(candidatesDirectory) {
     if (!fs.existsSync(candidatesDirectory) || !fs.statSync(candidatesDirectory).isDirectory()) {
         throw new Error(`no candidates directory at ${candidatesDirectory}`)
     }
@@ -39,23 +36,40 @@ function readManifest(candidatesDirectory) {
 }
 
 /** @throws {Error} if an entry names a file that is not in the directory. */
-function takeCandidateStems(manifest, candidatesDirectory) {
-    const stems = Object.keys(manifest).sort()
+function vetCandidateNames(candidatesManifest, candidatesDirectory) {
+    const names = Object.keys(candidatesManifest).sort()
 
-    const absent = stems.filter((stem) =>
-        !fs.existsSync(path.join(candidatesDirectory, `${stem}${CANDIDATE_SUFFIX}`)))
+    const absent = names.filter((name) =>
+        !fs.existsSync(path.join(candidatesDirectory, `${name}${CANDIDATE_SUFFIX}`)))
     if (absent.length > 0) {
         throw new Error(`no candidate file for ${absent.join(', ')}`)
     }
 
-    return stems
+    return names
 }
 
-function sayWhatWasSkipped(manifest, candidatesDirectory) {
+/** @throws {Error} if the entry names a tier that does not exist. */
+function buildCandidate(name, entry, candidatesDirectory, overrideTier) {
+    let declaredTier
+    if (entry.target !== undefined) {
+        declaredTier = checkTro.lookUpTier(entry.target)
+    }
+
+    return {
+        name,
+        fileName: `${name}${CANDIDATE_SUFFIX}`,
+        path: path.join(candidatesDirectory, `${name}${CANDIDATE_SUFFIX}`),
+        description: entry.description,
+        targetTier: overrideTier ?? declaredTier ?? checkTro.lookUpTier(ASSUMED_TIER),
+        targetWasDeclared: overrideTier !== undefined || declaredTier !== undefined,
+    }
+}
+
+function sayWhatWasSkipped(candidatesManifest, candidatesDirectory) {
     const skipped = fs
         .readdirSync(candidatesDirectory)
         .filter((name) => name.endsWith(CANDIDATE_SUFFIX))
-        .filter((name) => manifest[path.basename(name, CANDIDATE_SUFFIX)] === undefined)
+        .filter((name) => candidatesManifest[path.basename(name, CANDIDATE_SUFFIX)] === undefined)
         .sort()
 
     for (const name of skipped) {
@@ -65,7 +79,7 @@ function sayWhatWasSkipped(manifest, candidatesDirectory) {
 
 /** @throws {Error} if the candidate cannot be checked, or its report cannot be written. */
 function reportOn(candidate, reportsDirectory) {
-    const reportPath = path.join(reportsDirectory, `${candidate.stem}.md`)
+    const reportPath = path.join(reportsDirectory, `${candidate.name}.md`)
 
     const findings = checkTro.checkCandidateAgainstExpectations(candidate)
     const assessments = checkTro.assessTiers(candidate, findings)
@@ -80,12 +94,15 @@ function checkEach(candidates, reportsDirectory) {
         try {
             reportOn(candidate, reportsDirectory)
         } catch (error) {
-            process.stderr.write(`${candidate.stem}: could not be checked -- ${error.message}\n`)
+            process.stderr.write(`${candidate.name}: could not be checked -- ${error.message}\n`)
             unreportedCount += 1
         }
     }
     return unreportedCount
 }
+
+const USAGE = 'usage: check-tros --candidates DIR --reports DIR [--target TIER]'
+const ASSUMED_TIER = '1'
 
 function runAsCommand() {
     try {
@@ -103,31 +120,18 @@ function runAsCommand() {
         const reportsDirectory = optionValues.reports
         if (!candidatesDirectory || !reportsDirectory) throw new Error(USAGE)
 
-        const overrideTier = optionValues.target !== undefined
-            ? checkTro.tierNumbered(optionValues.target)
-            : undefined
-        const assumedTier = checkTro.tierNumbered(ASSUMED_TIER)
+        let overrideTier
+        if (optionValues.target !== undefined) {
+            overrideTier = checkTro.lookUpTier(optionValues.target)
+        }
 
-        const manifest = readManifest(candidatesDirectory)
-        const stems = takeCandidateStems(manifest, candidatesDirectory)
+        const manifest = readCandidatesManifest(candidatesDirectory)
+        const names = vetCandidateNames(manifest, candidatesDirectory)
 
         sayWhatWasSkipped(manifest, candidatesDirectory)
 
-        const candidates = stems.map((stem) => {
-            const entry = manifest[stem]
-            const declaredTier = entry.target !== undefined
-                ? checkTro.tierNumbered(String(entry.target))
-                : undefined
-
-            return {
-                stem,
-                name: `${stem}${CANDIDATE_SUFFIX}`,
-                path: path.join(candidatesDirectory, `${stem}${CANDIDATE_SUFFIX}`),
-                description: entry.description,
-                targetTier: overrideTier ?? declaredTier ?? assumedTier,
-                targetWasDeclared: overrideTier !== undefined || declaredTier !== undefined,
-            }
-        })
+        const candidates = names.map((name) =>
+            buildCandidate(name, manifest[name], candidatesDirectory, overrideTier))
 
         fs.mkdirSync(reportsDirectory, { recursive: true })
 
