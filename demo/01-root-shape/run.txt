@@ -15,35 +15,20 @@ $ report_on instance-node-object.jsonld
 wrote tmp/instance-node-object.md; Tier 0 met
 
 # Report
-
 Candidate: `instance-node-object.jsonld`
-
 Target: Tier 0 -- Well-Formed (declared)
-
 ## Assessment
-
 - Tier 0 -- Well-Formed: met
-
 ## Findings
-
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
-
 ### has-well-formed-context (Tier 0): met
-
 ### has-well-formed-graph (Tier 0): met
-
 ### is-node-object-or-array-of-them (Tier 0): met
-
 ### composition-fingerprint (Tier 1): not claimed
-
 ### hash-form (Tier 1): not claimed
-
 ### tro-minimal (Tier 1): not claimed
-
 ### trs-typed (Tier 1): not claimed
-
 ### context-base (Tier 2): not claimed
-
 ### node-id-present (Tier 2): not claimed
 
 ----- [2] expectation unmet: the document is a string ------------------------
@@ -54,47 +39,28 @@ $ report_on instance-string.jsonld
 wrote tmp/instance-string.md; Tier 0 unmet
 
 # Report
-
 Candidate: `instance-string.jsonld`
-
 Target: Tier 0 -- Well-Formed (declared)
-
 ## Assessment
-
 - Tier 0 -- Well-Formed: unmet
-
 ## Findings
-
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
-
 ### has-well-formed-context (Tier 0): met
-
 ### has-well-formed-graph (Tier 0): met
-
 ### is-node-object-or-array-of-them (Tier 0): unmet
-
 `jsonschema-validate`:
-
 ```
 INVALID: a JSON-LD document is a node object, or an array of node objects
 ```
-
 `ajv-validate`:
-
 ```
 INVALID: a JSON-LD document is a node object, or an array of node objects
 ```
-
 ### composition-fingerprint (Tier 1): not claimed
-
 ### hash-form (Tier 1): not claimed
-
 ### tro-minimal (Tier 1): not claimed
-
 ### trs-typed (Tier 1): not claimed
-
 ### context-base (Tier 2): not claimed
-
 ### node-id-present (Tier 2): not claimed
 
 ----- [3] expectation met: every member of the array is a node object --------
@@ -108,35 +74,20 @@ $ report_on instance-array-of-node-objects.jsonld
 wrote tmp/instance-array-of-node-objects.md; Tier 0 met
 
 # Report
-
 Candidate: `instance-array-of-node-objects.jsonld`
-
 Target: Tier 0 -- Well-Formed (declared)
-
 ## Assessment
-
 - Tier 0 -- Well-Formed: met
-
 ## Findings
-
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
-
 ### has-well-formed-context (Tier 0): met
-
 ### has-well-formed-graph (Tier 0): met
-
 ### is-node-object-or-array-of-them (Tier 0): met
-
 ### composition-fingerprint (Tier 1): not claimed
-
 ### hash-form (Tier 1): not claimed
-
 ### tro-minimal (Tier 1): not claimed
-
 ### trs-typed (Tier 1): not claimed
-
 ### context-base (Tier 2): not claimed
-
 ### node-id-present (Tier 2): not claimed
 
 ----- [4] expectation unmet: a member of the array is a string ---------------
@@ -150,45 +101,26 @@ $ report_on instance-array-with-scalar.jsonld
 wrote tmp/instance-array-with-scalar.md; Tier 0 unmet
 
 # Report
-
 Candidate: `instance-array-with-scalar.jsonld`
-
 Target: Tier 0 -- Well-Formed (declared)
-
 ## Assessment
-
 - Tier 0 -- Well-Formed: unmet
-
 ## Findings
-
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
-
 ### has-well-formed-context (Tier 0): met
-
 ### has-well-formed-graph (Tier 0): met
-
 ### is-node-object-or-array-of-them (Tier 0): unmet
-
 `jsonschema-validate`:
-
 ```
 INVALID: /1: every member of a JSON-LD document written as an array is a node object
 ```
-
 `ajv-validate`:
-
 ```
 INVALID: /1: every member of a JSON-LD document written as an array is a node object
 ```
-
 ### composition-fingerprint (Tier 1): not claimed
-
 ### hash-form (Tier 1): not claimed
-
 ### tro-minimal (Tier 1): not claimed
-
 ### trs-typed (Tier 1): not claimed
-
 ### context-base (Tier 2): not claimed
-
 ### node-id-present (Tier 2): not claimed

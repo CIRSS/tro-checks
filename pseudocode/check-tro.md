@@ -5,6 +5,7 @@
 - The location to write the report.
 - The tier the candidate is expected to reach.
 - A description of the candidate.
+- Whether to write the report without its blank lines.
 
 **The program describes its own usage and stops if...**
 - The location of the candidate was not given.
@@ -72,3 +73,5 @@
 - Its tier.
 - Its outcome.
 - The evidence for those unmet -- what each validator wrote.
+
+**The report is written without its blank lines when asked for compactly, which suits reading rather than rendering.**

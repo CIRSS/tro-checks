@@ -2,7 +2,7 @@
 //
 // Check one candidate against the expectations in its target and write the report.
 //
-//   check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT]
+//   check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT] [--compact]
 
 const childProcess = require('node:child_process')
 const { parseArgs } = require('node:util')
@@ -125,7 +125,7 @@ function namesOf(validators) {
     return validators.map((validator) => `\`${validator}\``).join(' and ')
 }
 
-function renderReportAsMarkdown(candidate, findings, assessments) {
+function renderReportAsMarkdown(candidate, findings, assessments, compact) {
     const renderEvidenceAsLines = (finding) => {
         const evidenceLines = []
         for (const answer of finding.answers) {
@@ -169,14 +169,16 @@ function renderReportAsMarkdown(candidate, findings, assessments) {
         if (finding.outcome === EXPECTATION.UNMET) lines.push(...renderEvidenceAsLines(finding))
     }
 
-    return lines.join('\n')
+    if (!compact) return lines.join('\n')
+
+    return `${lines.filter((line) => line !== '').join('\n')}\n`
 }
 
 /** @throws {Error} if the report cannot be written. */
-function writeReport(reportPath, candidate, findings, assessments) {
+function writeReport(reportPath, candidate, findings, assessments, compact) {
     fs.writeFileSync(
         reportPath,
-        renderReportAsMarkdown(candidate, findings, assessments))
+        renderReportAsMarkdown(candidate, findings, assessments, compact))
 }
 
 function summarizeInOneLine(reportPath, assessments) {
@@ -187,7 +189,7 @@ function summarizeInOneLine(reportPath, assessments) {
 }
 
 const USAGE =
-    'usage: check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT]'
+    'usage: check-tro --candidate FILE --report FILE [--target TIER] [--description TEXT] [--compact]'
 
 const ASSUMED_TIER = '1'
 
@@ -206,6 +208,7 @@ function runAsCommand() {
                 report: { type: 'string' },
                 target: { type: 'string' },
                 description: { type: 'string' },
+                compact: { type: 'boolean' },
             },
             allowPositionals: false,
         }).values
@@ -229,7 +232,7 @@ function runAsCommand() {
         const findings = checkCandidateAgainstExpectations(candidate)
         const assessments = assessTiers(candidate, findings)
 
-        writeReport(reportPath, candidate, findings, assessments)
+        writeReport(reportPath, candidate, findings, assessments, optionValues.compact)
         process.stdout.write(`${summarizeInOneLine(reportPath, assessments)}\n`)
 
         return findings.some((finding) => finding.outcome === EXPECTATION.UNMET)
