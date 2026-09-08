@@ -1,0 +1,120 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/trov-terms-known.schema.json",
+    "title": "TROV terms known",
+    "description": "Where a property name or a string value carries the trov: prefix, it is a term the TROV vocabulary defines.",
+    "$defs": {
+        "knownTrovTerm": {
+            "if": {
+                "type": "string",
+                "pattern": "^trov:"
+            },
+            "then": {
+                "enum": [
+                    "trov:ArrangementBinding",
+                    "trov:ArtifactArrangement",
+                    "trov:ArtifactCollection",
+                    "trov:ArtifactComposition",
+                    "trov:ArtifactLocation",
+                    "trov:CanDetectInternetAccess",
+                    "trov:CanEnforceCapabilitiesTechnically",
+                    "trov:CanEnforceInternetIsolation",
+                    "trov:CanEnsureCodeIncludedInTROPackage",
+                    "trov:CanEnsureInputDataIncludedInTROPackage",
+                    "trov:CanEnsureInputDataPersistsAfterRun",
+                    "trov:CanEnsureOutputDataIncludedInTROPackage",
+                    "trov:CanExcludeInputs",
+                    "trov:CanExcludeOutputs",
+                    "trov:CanIsolateEnvironment",
+                    "trov:CanPreventAuthorIntervention",
+                    "trov:CanPreventUserInteractionDuringRun",
+                    "trov:CanProvideInternetIsolation",
+                    "trov:CanRecordInternetAccess",
+                    "trov:CanRecordSoftwareEnvironment",
+                    "trov:CanRequireInputDataExistsBeforeRun",
+                    "trov:CanRequireInputDataLocalBeforeRun",
+                    "trov:CompositionFingerprint",
+                    "trov:IncludesAllInputData",
+                    "trov:InternetAccessRecording",
+                    "trov:InternetIsolation",
+                    "trov:ResearchArtifact",
+                    "trov:TREAttribute",
+                    "trov:TROAttribute",
+                    "trov:TRPAttribute",
+                    "trov:TRSAttribute",
+                    "trov:TRSCapability",
+                    "trov:TRSPolicy",
+                    "trov:TimeStampingAuthority",
+                    "trov:TransparentResearchObject",
+                    "trov:TrustedResearchElement",
+                    "trov:TrustedResearchPerformance",
+                    "trov:TrustedResearchSystem",
+                    "trov:accessedArrangement",
+                    "trov:arrangement",
+                    "trov:artifact",
+                    "trov:boundTo",
+                    "trov:contributedToArrangement",
+                    "trov:createdWith",
+                    "trov:customTerm",
+                    "trov:endedAtTime",
+                    "trov:hasArrangement",
+                    "trov:hasArtifact",
+                    "trov:hasArtifactLocation",
+                    "trov:hasAttribute",
+                    "trov:hasCapability",
+                    "trov:hasComposition",
+                    "trov:hasFingerprint",
+                    "trov:hasPerformance",
+                    "trov:hasPerformanceAttribute",
+                    "trov:hasPolicy",
+                    "trov:hash",
+                    "trov:hashAlgorithm",
+                    "trov:hashValue",
+                    "trov:mimeType",
+                    "trov:path",
+                    "trov:publicKey",
+                    "trov:signingMechanism",
+                    "trov:startedAtTime",
+                    "trov:vocabularyVersion",
+                    "trov:warrantedBy",
+                    "trov:wasAssembledBy",
+                    "trov:wasConductedBy",
+                    "trov:wasTimestampedBy"
+                ],
+                "errorMessage": {
+                    "enum": "not a term the TROV vocabulary defines"
+                }
+            }
+        },
+        "node": {
+            "if": {
+                "type": "object"
+            },
+            "then": {
+                "propertyNames": {
+                    "$ref": "#/$defs/knownTrovTerm"
+                },
+                "properties": {
+                    "@context": true
+                },
+                "additionalProperties": {
+                    "$ref": "#/$defs/node"
+                }
+            },
+            "else": {
+                "if": {
+                    "type": "array"
+                },
+                "then": {
+                    "items": {
+                        "$ref": "#/$defs/node"
+                    }
+                },
+                "else": {
+                    "$ref": "#/$defs/knownTrovTerm"
+                }
+            }
+        }
+    },
+    "$ref": "#/$defs/node"
+}

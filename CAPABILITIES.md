@@ -8,16 +8,13 @@ Every expectation uses `dialect-declaration` (`22`), `id-and-anchor` (`13`), `er
 | --- | --- | --- |
 | `has-well-formed-context` | 0 | `type-applicability` (`05`), `properties` (`02`), `items` (`03`) |
 | `has-well-formed-graph` | 0 | `type-applicability` (`05`), `properties` (`02`), `items` (`03`) |
-| `is-node-object-or-array-of-them` | 0 | `type-applicability` (`05`), `items` (`03`) |
+| `node-rooted` | 0 | `type-applicability` (`05`), `items` (`03`) |
 | `composition-fingerprint` | 1 | `type-applicability` (`05`), `properties` (`02`), `required` (`04`), `items` (`03`) |
+| `trov-terms-known` | 1 | `properties` (`02`), `items` (`03`), `boolean-schema` (`01`), `additional-properties` (`09`), `pattern` (`07`), `enum` (`05`), `if-then-else` (`11`), `defs-and-ref` (`12`), `recursive-ref` (`17`), `property-names` (*no demo* \*) |
 | `hash-form` | 1 | `type-applicability` (`05`), `properties` (`02`), `required` (`04`), `items` (`03`), `const` (`10`), `pattern` (`07`), `defs-and-ref` (`12`) |
 | `tro-minimal` | 1 | `required` (`04`) |
 | `trs-typed` | 1 | `type-applicability` (`05`), `properties` (`02`), `required` (`04`), `items` (`03`), `const` (`10`), `contains` (`18`), `if-then-else` (`11`) |
 | `context-base` | 2 | `type-applicability` (`05`), `properties` (`02`), `required` (`04`), `contains` (`18`), `if-then-else` (`11`) |
 | `node-id-present` | 2 | `type-applicability` (`05`), `properties` (`02`), `required` (`04`), `items` (`03`), `additional-properties` (`09`), `boolean-schema` (`01`), `not` (`08`), `anyOf` (`08`), `if-then-else` (`11`), `defs-and-ref` (`12`), `recursive-ref` (`17`) |
 
-`id-and-anchor` covers `$id` only; no `$ref` in this repository resolves by URI.
-
-The runners depend on one capability of their own: `exit-code-contract` (`20`), which `check-tro` and `check-tros` both implement.
-
-Every capability these schemas use is demonstrated. Nothing in the battery rests on a construct with no demo; what is missing is demonstrations of the *combinations*.
+\* The gallery has no demo for `property-names`.

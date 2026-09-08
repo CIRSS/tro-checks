@@ -1,0 +1,338 @@
+##############################################################################
+#
+#   tro-checks  ·  demo 04: trov-terms-known (Tier 1)
+#
+##############################################################################
+
+----- [1] expectation met: the property name trov:vocabularyVersion is defined by TROV -----
+
+$ report_on instance-property-name-known.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:vocabularyVersion": "0.1"
+        }
+    ]
+}
+
+wrote tmp/instance-property-name-known.md; Tier 0 met, Tier 1 met
+
+# Report
+Candidate: `instance-property-name-known.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: met
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): met
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [2] expectation unmet: the property name trov:vocabularyRelease is not defined by TROV -----
+
+$ report_on instance-property-name-unknown.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:vocabularyRelease": "0.1"
+        }
+    ]
+}
+
+wrote tmp/instance-property-name-unknown.md; Tier 0 met, Tier 1 unmet
+
+# Report
+Candidate: `instance-property-name-unknown.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: unmet
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): unmet
+`jsonschema-validate`:
+```
+INVALID: /@graph/0: 'trov:vocabularyRelease' is not one of ['trov:ArrangementBinding', 'trov:ArtifactArrangement', 'trov:ArtifactCollection', 'trov:ArtifactComposition', 'trov:ArtifactLocation', 'trov:CanDetectInternetAccess', 'trov:CanEnforceCapabilitiesTechnically', 'trov:CanEnforceInternetIsolation', 'trov:CanEnsureCodeIncludedInTROPackage', 'trov:CanEnsureInputDataIncludedInTROPackage', 'trov:CanEnsureInputDataPersistsAfterRun', 'trov:CanEnsureOutputDataIncludedInTROPackage', 'trov:CanExcludeInputs', 'trov:CanExcludeOutputs', 'trov:CanIsolateEnvironment', 'trov:CanPreventAuthorIntervention', 'trov:CanPreventUserInteractionDuringRun', 'trov:CanProvideInternetIsolation', 'trov:CanRecordInternetAccess', 'trov:CanRecordSoftwareEnvironment', 'trov:CanRequireInputDataExistsBeforeRun', 'trov:CanRequireInputDataLocalBeforeRun', 'trov:CompositionFingerprint', 'trov:IncludesAllInputData', 'trov:InternetAccessRecording', 'trov:InternetIsolation', 'trov:ResearchArtifact', 'trov:TREAttribute', 'trov:TROAttribute', 'trov:TRPAttribute', 'trov:TRSAttribute', 'trov:TRSCapability', 'trov:TRSPolicy', 'trov:TimeStampingAuthority', 'trov:TransparentResearchObject', 'trov:TrustedResearchElement', 'trov:TrustedResearchPerformance', 'trov:TrustedResearchSystem', 'trov:accessedArrangement', 'trov:arrangement', 'trov:artifact', 'trov:boundTo', 'trov:contributedToArrangement', 'trov:createdWith', 'trov:customTerm', 'trov:endedAtTime', 'trov:hasArrangement', 'trov:hasArtifact', 'trov:hasArtifactLocation', 'trov:hasAttribute', 'trov:hasCapability', 'trov:hasComposition', 'trov:hasFingerprint', 'trov:hasPerformance', 'trov:hasPerformanceAttribute', 'trov:hasPolicy', 'trov:hash', 'trov:hashAlgorithm', 'trov:hashValue', 'trov:mimeType', 'trov:path', 'trov:publicKey', 'trov:signingMechanism', 'trov:startedAtTime', 'trov:vocabularyVersion', 'trov:warrantedBy', 'trov:wasAssembledBy', 'trov:wasConductedBy', 'trov:wasTimestampedBy']
+```
+`ajv-validate`:
+```
+INVALID: /@graph/0: not a term the TROV vocabulary defines
+INVALID: /@graph/0: must match "then" schema
+INVALID: /@graph/0: property name must be valid
+INVALID: /@graph/0: must match "then" schema
+INVALID: /@graph: must match "then" schema
+INVALID: /@graph: must match "else" schema
+INVALID: must match "then" schema
+```
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [3] expectation met: the @id trov:IncludesAllInputData is defined by TROV -----
+
+$ report_on instance-id-known.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:hasAttribute": { "@id": "trov:IncludesAllInputData" }
+        }
+    ]
+}
+
+wrote tmp/instance-id-known.md; Tier 0 met, Tier 1 met
+
+# Report
+Candidate: `instance-id-known.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: met
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): met
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [4] expectation unmet: the @id trov:IncludesAllOutputData is not defined by TROV -----
+
+$ report_on instance-id-unknown.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:hasAttribute": { "@id": "trov:IncludesAllOutputData" }
+        }
+    ]
+}
+
+wrote tmp/instance-id-unknown.md; Tier 0 met, Tier 1 unmet
+
+# Report
+Candidate: `instance-id-unknown.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: unmet
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): unmet
+`jsonschema-validate`:
+```
+INVALID: /@graph/0/trov:hasAttribute/@id: 'trov:IncludesAllOutputData' is not one of ['trov:ArrangementBinding', 'trov:ArtifactArrangement', 'trov:ArtifactCollection', 'trov:ArtifactComposition', 'trov:ArtifactLocation', 'trov:CanDetectInternetAccess', 'trov:CanEnforceCapabilitiesTechnically', 'trov:CanEnforceInternetIsolation', 'trov:CanEnsureCodeIncludedInTROPackage', 'trov:CanEnsureInputDataIncludedInTROPackage', 'trov:CanEnsureInputDataPersistsAfterRun', 'trov:CanEnsureOutputDataIncludedInTROPackage', 'trov:CanExcludeInputs', 'trov:CanExcludeOutputs', 'trov:CanIsolateEnvironment', 'trov:CanPreventAuthorIntervention', 'trov:CanPreventUserInteractionDuringRun', 'trov:CanProvideInternetIsolation', 'trov:CanRecordInternetAccess', 'trov:CanRecordSoftwareEnvironment', 'trov:CanRequireInputDataExistsBeforeRun', 'trov:CanRequireInputDataLocalBeforeRun', 'trov:CompositionFingerprint', 'trov:IncludesAllInputData', 'trov:InternetAccessRecording', 'trov:InternetIsolation', 'trov:ResearchArtifact', 'trov:TREAttribute', 'trov:TROAttribute', 'trov:TRPAttribute', 'trov:TRSAttribute', 'trov:TRSCapability', 'trov:TRSPolicy', 'trov:TimeStampingAuthority', 'trov:TransparentResearchObject', 'trov:TrustedResearchElement', 'trov:TrustedResearchPerformance', 'trov:TrustedResearchSystem', 'trov:accessedArrangement', 'trov:arrangement', 'trov:artifact', 'trov:boundTo', 'trov:contributedToArrangement', 'trov:createdWith', 'trov:customTerm', 'trov:endedAtTime', 'trov:hasArrangement', 'trov:hasArtifact', 'trov:hasArtifactLocation', 'trov:hasAttribute', 'trov:hasCapability', 'trov:hasComposition', 'trov:hasFingerprint', 'trov:hasPerformance', 'trov:hasPerformanceAttribute', 'trov:hasPolicy', 'trov:hash', 'trov:hashAlgorithm', 'trov:hashValue', 'trov:mimeType', 'trov:path', 'trov:publicKey', 'trov:signingMechanism', 'trov:startedAtTime', 'trov:vocabularyVersion', 'trov:warrantedBy', 'trov:wasAssembledBy', 'trov:wasConductedBy', 'trov:wasTimestampedBy']
+```
+`ajv-validate`:
+```
+INVALID: /@graph/0/trov:hasAttribute/@id: not a term the TROV vocabulary defines
+INVALID: /@graph/0/trov:hasAttribute/@id: must match "then" schema
+INVALID: /@graph/0/trov:hasAttribute/@id: must match "else" schema
+INVALID: /@graph/0/trov:hasAttribute/@id: must match "else" schema
+INVALID: /@graph/0/trov:hasAttribute: must match "then" schema
+INVALID: /@graph/0: must match "then" schema
+INVALID: /@graph: must match "then" schema
+INVALID: /@graph: must match "else" schema
+INVALID: must match "then" schema
+```
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [5] expectation met: the @type trov:TrustedResearchPerformance is defined by TROV -----
+
+$ report_on instance-type-known.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:hasPerformance": { "@type": "trov:TrustedResearchPerformance" }
+        }
+    ]
+}
+
+wrote tmp/instance-type-known.md; Tier 0 met, Tier 1 met
+
+# Report
+Candidate: `instance-type-known.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: met
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): met
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [6] expectation unmet: the @type trov:TrustedResearchPerformace is not defined by TROV -----
+
+$ report_on instance-type-unknown.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:hasPerformance": { "@type": "trov:TrustedResearchPerformace" }
+        }
+    ]
+}
+
+wrote tmp/instance-type-unknown.md; Tier 0 met, Tier 1 unmet
+
+# Report
+Candidate: `instance-type-unknown.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: unmet
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): unmet
+`jsonschema-validate`:
+```
+INVALID: /@graph/0/trov:hasPerformance/@type: 'trov:TrustedResearchPerformace' is not one of ['trov:ArrangementBinding', 'trov:ArtifactArrangement', 'trov:ArtifactCollection', 'trov:ArtifactComposition', 'trov:ArtifactLocation', 'trov:CanDetectInternetAccess', 'trov:CanEnforceCapabilitiesTechnically', 'trov:CanEnforceInternetIsolation', 'trov:CanEnsureCodeIncludedInTROPackage', 'trov:CanEnsureInputDataIncludedInTROPackage', 'trov:CanEnsureInputDataPersistsAfterRun', 'trov:CanEnsureOutputDataIncludedInTROPackage', 'trov:CanExcludeInputs', 'trov:CanExcludeOutputs', 'trov:CanIsolateEnvironment', 'trov:CanPreventAuthorIntervention', 'trov:CanPreventUserInteractionDuringRun', 'trov:CanProvideInternetIsolation', 'trov:CanRecordInternetAccess', 'trov:CanRecordSoftwareEnvironment', 'trov:CanRequireInputDataExistsBeforeRun', 'trov:CanRequireInputDataLocalBeforeRun', 'trov:CompositionFingerprint', 'trov:IncludesAllInputData', 'trov:InternetAccessRecording', 'trov:InternetIsolation', 'trov:ResearchArtifact', 'trov:TREAttribute', 'trov:TROAttribute', 'trov:TRPAttribute', 'trov:TRSAttribute', 'trov:TRSCapability', 'trov:TRSPolicy', 'trov:TimeStampingAuthority', 'trov:TransparentResearchObject', 'trov:TrustedResearchElement', 'trov:TrustedResearchPerformance', 'trov:TrustedResearchSystem', 'trov:accessedArrangement', 'trov:arrangement', 'trov:artifact', 'trov:boundTo', 'trov:contributedToArrangement', 'trov:createdWith', 'trov:customTerm', 'trov:endedAtTime', 'trov:hasArrangement', 'trov:hasArtifact', 'trov:hasArtifactLocation', 'trov:hasAttribute', 'trov:hasCapability', 'trov:hasComposition', 'trov:hasFingerprint', 'trov:hasPerformance', 'trov:hasPerformanceAttribute', 'trov:hasPolicy', 'trov:hash', 'trov:hashAlgorithm', 'trov:hashValue', 'trov:mimeType', 'trov:path', 'trov:publicKey', 'trov:signingMechanism', 'trov:startedAtTime', 'trov:vocabularyVersion', 'trov:warrantedBy', 'trov:wasAssembledBy', 'trov:wasConductedBy', 'trov:wasTimestampedBy']
+```
+`ajv-validate`:
+```
+INVALID: /@graph/0/trov:hasPerformance/@type: not a term the TROV vocabulary defines
+INVALID: /@graph/0/trov:hasPerformance/@type: must match "then" schema
+INVALID: /@graph/0/trov:hasPerformance/@type: must match "else" schema
+INVALID: /@graph/0/trov:hasPerformance/@type: must match "else" schema
+INVALID: /@graph/0/trov:hasPerformance: must match "then" schema
+INVALID: /@graph/0: must match "then" schema
+INVALID: /@graph: must match "then" schema
+INVALID: /@graph: must match "else" schema
+INVALID: must match "then" schema
+```
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [7] expectation met: the bare value trov:CanIsolateEnvironment is defined by TROV -----
+
+$ report_on instance-value-known.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:hasCapability": "trov:CanIsolateEnvironment"
+        }
+    ]
+}
+
+wrote tmp/instance-value-known.md; Tier 0 met, Tier 1 met
+
+# Report
+Candidate: `instance-value-known.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: met
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): met
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed
+
+----- [8] expectation unmet: the bare value trov:CanIsolateNetwork is not defined by TROV -----
+
+$ report_on instance-value-unknown.jsonld
+{
+    "@context": { "trov": "https://w3id.org/trace/trov/0.1/" },
+    "@graph": [
+        {
+            "@id": "tro",
+            "trov:hasCapability": "trov:CanIsolateNetwork"
+        }
+    ]
+}
+
+wrote tmp/instance-value-unknown.md; Tier 0 met, Tier 1 unmet
+
+# Report
+Candidate: `instance-value-unknown.jsonld`
+Target: Tier 1 -- Self-Contained (declared)
+## Assessment
+- Tier 0 -- Well-Formed: met
+- Tier 1 -- Self-Contained: unmet
+## Findings
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+### has-well-formed-context (Tier 0): met
+### has-well-formed-graph (Tier 0): met
+### node-rooted (Tier 0): met
+### composition-fingerprint (Tier 1): met
+### hash-form (Tier 1): met
+### tro-minimal (Tier 1): met
+### trov-terms-known (Tier 1): unmet
+`jsonschema-validate`:
+```
+INVALID: /@graph/0/trov:hasCapability: 'trov:CanIsolateNetwork' is not one of ['trov:ArrangementBinding', 'trov:ArtifactArrangement', 'trov:ArtifactCollection', 'trov:ArtifactComposition', 'trov:ArtifactLocation', 'trov:CanDetectInternetAccess', 'trov:CanEnforceCapabilitiesTechnically', 'trov:CanEnforceInternetIsolation', 'trov:CanEnsureCodeIncludedInTROPackage', 'trov:CanEnsureInputDataIncludedInTROPackage', 'trov:CanEnsureInputDataPersistsAfterRun', 'trov:CanEnsureOutputDataIncludedInTROPackage', 'trov:CanExcludeInputs', 'trov:CanExcludeOutputs', 'trov:CanIsolateEnvironment', 'trov:CanPreventAuthorIntervention', 'trov:CanPreventUserInteractionDuringRun', 'trov:CanProvideInternetIsolation', 'trov:CanRecordInternetAccess', 'trov:CanRecordSoftwareEnvironment', 'trov:CanRequireInputDataExistsBeforeRun', 'trov:CanRequireInputDataLocalBeforeRun', 'trov:CompositionFingerprint', 'trov:IncludesAllInputData', 'trov:InternetAccessRecording', 'trov:InternetIsolation', 'trov:ResearchArtifact', 'trov:TREAttribute', 'trov:TROAttribute', 'trov:TRPAttribute', 'trov:TRSAttribute', 'trov:TRSCapability', 'trov:TRSPolicy', 'trov:TimeStampingAuthority', 'trov:TransparentResearchObject', 'trov:TrustedResearchElement', 'trov:TrustedResearchPerformance', 'trov:TrustedResearchSystem', 'trov:accessedArrangement', 'trov:arrangement', 'trov:artifact', 'trov:boundTo', 'trov:contributedToArrangement', 'trov:createdWith', 'trov:customTerm', 'trov:endedAtTime', 'trov:hasArrangement', 'trov:hasArtifact', 'trov:hasArtifactLocation', 'trov:hasAttribute', 'trov:hasCapability', 'trov:hasComposition', 'trov:hasFingerprint', 'trov:hasPerformance', 'trov:hasPerformanceAttribute', 'trov:hasPolicy', 'trov:hash', 'trov:hashAlgorithm', 'trov:hashValue', 'trov:mimeType', 'trov:path', 'trov:publicKey', 'trov:signingMechanism', 'trov:startedAtTime', 'trov:vocabularyVersion', 'trov:warrantedBy', 'trov:wasAssembledBy', 'trov:wasConductedBy', 'trov:wasTimestampedBy']
+```
+`ajv-validate`:
+```
+INVALID: /@graph/0/trov:hasCapability: not a term the TROV vocabulary defines
+INVALID: /@graph/0/trov:hasCapability: must match "then" schema
+INVALID: /@graph/0/trov:hasCapability: must match "else" schema
+INVALID: /@graph/0/trov:hasCapability: must match "else" schema
+INVALID: /@graph/0: must match "then" schema
+INVALID: /@graph: must match "then" schema
+INVALID: /@graph: must match "else" schema
+INVALID: must match "then" schema
+```
+### trs-typed (Tier 1): met
+### context-base (Tier 2): not claimed
+### node-id-present (Tier 2): not claimed

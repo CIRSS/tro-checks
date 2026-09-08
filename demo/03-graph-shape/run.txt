@@ -23,10 +23,11 @@ Target: Tier 0 -- Well-Formed (declared)
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
-### is-node-object-or-array-of-them (Tier 0): met
+### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed
@@ -58,10 +59,11 @@ INVALID: /@graph: an @graph holds a node object, or an array of node objects
 ```
 INVALID: /@graph: an @graph holds a node object, or an array of node objects
 ```
-### is-node-object-or-array-of-them (Tier 0): met
+### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed
@@ -88,10 +90,11 @@ Target: Tier 0 -- Well-Formed (declared)
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
-### is-node-object-or-array-of-them (Tier 0): met
+### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed
@@ -126,10 +129,11 @@ INVALID: /@graph/1: every member of an @graph array is a node object
 ```
 INVALID: /@graph/1: every member of an @graph array is a node object
 ```
-### is-node-object-or-array-of-them (Tier 0): met
+### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed

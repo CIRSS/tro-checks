@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#   tro-checks  ·  demo 01: is-node-object-or-array-of-them (Tier 0)
+#   tro-checks  ·  demo 01: node-rooted (Tier 0)
 #
 ##############################################################################
 
@@ -23,10 +23,11 @@ Target: Tier 0 -- Well-Formed (declared)
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
-### is-node-object-or-array-of-them (Tier 0): met
+### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed
@@ -47,7 +48,7 @@ Target: Tier 0 -- Well-Formed (declared)
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
-### is-node-object-or-array-of-them (Tier 0): unmet
+### node-rooted (Tier 0): unmet
 `jsonschema-validate`:
 ```
 INVALID: a JSON-LD document is a node object, or an array of node objects
@@ -59,6 +60,7 @@ INVALID: a JSON-LD document is a node object, or an array of node objects
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed
@@ -82,10 +84,11 @@ Target: Tier 0 -- Well-Formed (declared)
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
-### is-node-object-or-array-of-them (Tier 0): met
+### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed
@@ -109,7 +112,7 @@ Target: Tier 0 -- Well-Formed (declared)
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
-### is-node-object-or-array-of-them (Tier 0): unmet
+### node-rooted (Tier 0): unmet
 `jsonschema-validate`:
 ```
 INVALID: /1: every member of a JSON-LD document written as an array is a node object
@@ -121,6 +124,7 @@ INVALID: /1: every member of a JSON-LD document written as an array is a node ob
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
+### trov-terms-known (Tier 1): not claimed
 ### trs-typed (Tier 1): not claimed
 ### context-base (Tier 2): not claimed
 ### node-id-present (Tier 2): not claimed

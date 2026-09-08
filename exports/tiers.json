@@ -4,13 +4,14 @@
         "expectations": [
             "has-well-formed-context",
             "has-well-formed-graph",
-            "is-node-object-or-array-of-them"
+            "node-rooted"
         ]
     },
     "1": {
         "name": "Self-Contained",
         "expectations": [
             "composition-fingerprint",
+            "trov-terms-known",
             "hash-form",
             "tro-minimal",
             "trs-typed"
