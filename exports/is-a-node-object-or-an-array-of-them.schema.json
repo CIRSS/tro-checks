@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/is-a-node-object-or-an-array-of-them.schema.json",
+    "title": "Is a node object or an array of them",
+    "description": "The root of a JSON-LD 1.1 document must take the form of a single node object, or an array whose members are node objects.",
+    "$comment": "Tier 0. The root shape a JSON-LD 1.1 document may take, which is the part of the grammar a schema can carry without seeing the active context. It overlaps tro-minimal, which requires an object root for a TRO specifically; the overlap is deliberate. items applies only to arrays, so it gates itself and no if/then is needed.",
+    "type": ["object", "array"],
+    "items": {
+        "type": "object",
+        "errorMessage": {
+            "type": "every member of a JSON-LD document written as an array is a node object"
+        }
+    },
+    "errorMessage": {
+        "type": "a JSON-LD document is a node object, or an array of node objects"
+    }
+}

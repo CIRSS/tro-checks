@@ -1,4 +1,10 @@
 {
+    "0": {
+        "name": "Well-Formed",
+        "expectations": [
+            "is-a-node-object-or-an-array-of-them"
+        ]
+    },
     "1": {
         "name": "Self-Contained",
         "expectations": [

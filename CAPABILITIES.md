@@ -10,15 +10,15 @@ Note that `check-tro` runs the Python-based `jsonschema-validate`  tool alone fo
 
 | Capability | Demo | Expectations using it |
 | --- | --- | --- |
-| `dialect-declaration` | `22` | all six |
-| `id-and-anchor` | `13` | all six (`$id` only; no `$ref` in this repository resolves by URI) |
-| `annotations` | `06` | `title` in all six; `description` in all but `tro-minimal`; `$comment` in `node-id-present` |
-| `error-message` | `19` | all six |
-| `type` | `02` | all six |
-| `type-applicability` | `05` | `composition-fingerprint`, `context-base`, `hash-form`, `node-id-present`, `trs-typed` |
-| `properties` | `02` | all but `tro-minimal` |
-| `required` | `04` | all six |
-| `items` | `03` | `composition-fingerprint`, `hash-form`, `node-id-present`, `trs-typed` |
+| `dialect-declaration` | `22` | all seven |
+| `id-and-anchor` | `13` | all seven (`$id` only; no `$ref` in this repository resolves by URI) |
+| `annotations` | `06` | `title` in all seven; `description` in all but `tro-minimal`; `$comment` in `node-id-present` and `is-a-node-object-or-an-array-of-them` |
+| `error-message` | `19` | all seven |
+| `type` | `02` | all seven |
+| `type-applicability` | `05` | `composition-fingerprint`, `context-base`, `hash-form`, `is-a-node-object-or-an-array-of-them`, `node-id-present`, `trs-typed` |
+| `properties` | `02` | all but `tro-minimal` and `is-a-node-object-or-an-array-of-them` |
+| `required` | `04` | all but `is-a-node-object-or-an-array-of-them` |
+| `items` | `03` | `composition-fingerprint`, `hash-form`, `is-a-node-object-or-an-array-of-them`, `node-id-present`, `trs-typed` |
 | `additional-properties` | `09` | `node-id-present` |
 | `boolean-schema` | `01` | `node-id-present` |
 | `const` | `10` | `hash-form`, `trs-typed` |
