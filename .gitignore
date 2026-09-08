@@ -1,5 +1,6 @@
 build
 dist
+demo/*/tmp/
 .*
 !.gitignore
 !.review-ledger/

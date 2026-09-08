@@ -1,0 +1,4 @@
+# The demos are notebooks: each demo's run.sh prints cells, and its run.txt is
+# whatever that printed. shell-notebook supplies the runner the demo/Makefile
+# includes; the cell helpers themselves are this repository's, in demo/cells.sh.
+repro.require shell-notebook master ${REPROS_DEV}

@@ -1,0 +1,202 @@
+##############################################################################
+#
+#   tro-checks  ·  demo 01: is-a-node-object-or-an-array-of-them (Tier 0)
+#
+##############################################################################
+
+----- [1] a single node object -----------------------------------------------
+
+$ cat instance-node-object.jsonld
+{
+    "@id": "https://example.org/thing/1",
+    "@type": "https://example.org/Thing"
+}
+
+----- [2] checked at Tier 0 --------------------------------------------------
+
+$ check-tro --target 0 --candidate instance-node-object.jsonld --report tmp/node-object.md
+wrote tmp/node-object.md; Tier 0 met
+
+----- [3] the report ---------------------------------------------------------
+
+$ cat tmp/node-object.md
+# Report
+
+Candidate: `instance-node-object.jsonld`
+
+Target: Tier 0 -- Well-Formed (declared)
+
+## Assessment
+
+- Tier 0 -- Well-Formed: met
+
+## Findings
+
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+
+### is-a-node-object-or-an-array-of-them (Tier 0): met
+
+### composition-fingerprint (Tier 1): not claimed
+
+### hash-form (Tier 1): not claimed
+
+### tro-minimal (Tier 1): not claimed
+
+### trs-typed (Tier 1): not claimed
+
+### context-base (Tier 2): not claimed
+
+### node-id-present (Tier 2): not claimed
+
+----- [4] an array of node objects -------------------------------------------
+
+$ cat instance-array-of-node-objects.jsonld
+[
+    { "@id": "https://example.org/thing/1" },
+    { "@id": "https://example.org/thing/2" }
+]
+
+----- [5] checked at Tier 0 --------------------------------------------------
+
+$ check-tro --target 0 --candidate instance-array-of-node-objects.jsonld --report tmp/array-of-node-objects.md
+wrote tmp/array-of-node-objects.md; Tier 0 met
+
+----- [6] the report ---------------------------------------------------------
+
+$ cat tmp/array-of-node-objects.md
+# Report
+
+Candidate: `instance-array-of-node-objects.jsonld`
+
+Target: Tier 0 -- Well-Formed (declared)
+
+## Assessment
+
+- Tier 0 -- Well-Formed: met
+
+## Findings
+
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+
+### is-a-node-object-or-an-array-of-them (Tier 0): met
+
+### composition-fingerprint (Tier 1): not claimed
+
+### hash-form (Tier 1): not claimed
+
+### tro-minimal (Tier 1): not claimed
+
+### trs-typed (Tier 1): not claimed
+
+### context-base (Tier 2): not claimed
+
+### node-id-present (Tier 2): not claimed
+
+----- [7] a string as the whole document -------------------------------------
+
+$ cat instance-string.jsonld
+"a document whose whole content is one string"
+
+----- [8] checked at Tier 0 --------------------------------------------------
+
+$ check-tro --target 0 --candidate instance-string.jsonld --report tmp/string.md
+wrote tmp/string.md; Tier 0 unmet
+
+----- [9] the report ---------------------------------------------------------
+
+$ cat tmp/string.md
+# Report
+
+Candidate: `instance-string.jsonld`
+
+Target: Tier 0 -- Well-Formed (declared)
+
+## Assessment
+
+- Tier 0 -- Well-Formed: unmet
+
+## Findings
+
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+
+### is-a-node-object-or-an-array-of-them (Tier 0): unmet
+
+`jsonschema-validate`:
+
+```
+INVALID: a JSON-LD document is a node object, or an array of node objects
+```
+
+`ajv-validate`:
+
+```
+INVALID: a JSON-LD document is a node object, or an array of node objects
+```
+
+### composition-fingerprint (Tier 1): not claimed
+
+### hash-form (Tier 1): not claimed
+
+### tro-minimal (Tier 1): not claimed
+
+### trs-typed (Tier 1): not claimed
+
+### context-base (Tier 2): not claimed
+
+### node-id-present (Tier 2): not claimed
+
+----- [10] an array carrying a scalar ----------------------------------------
+
+$ cat instance-array-with-scalar.jsonld
+[
+    { "@id": "https://example.org/thing/1" },
+    "not a node object"
+]
+
+----- [11] checked at Tier 0 -------------------------------------------------
+
+$ check-tro --target 0 --candidate instance-array-with-scalar.jsonld --report tmp/array-with-scalar.md
+wrote tmp/array-with-scalar.md; Tier 0 unmet
+
+----- [12] the report --------------------------------------------------------
+
+$ cat tmp/array-with-scalar.md
+# Report
+
+Candidate: `instance-array-with-scalar.jsonld`
+
+Target: Tier 0 -- Well-Formed (declared)
+
+## Assessment
+
+- Tier 0 -- Well-Formed: unmet
+
+## Findings
+
+Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
+
+### is-a-node-object-or-an-array-of-them (Tier 0): unmet
+
+`jsonschema-validate`:
+
+```
+INVALID: /1: every member of a JSON-LD document written as an array is a node object
+```
+
+`ajv-validate`:
+
+```
+INVALID: /1: every member of a JSON-LD document written as an array is a node object
+```
+
+### composition-fingerprint (Tier 1): not claimed
+
+### hash-form (Tier 1): not claimed
+
+### tro-minimal (Tier 1): not claimed
+
+### trs-typed (Tier 1): not claimed
+
+### context-base (Tier 2): not claimed
+
+### node-id-present (Tier 2): not claimed

@@ -86,6 +86,7 @@ labels `(assumed)`.
 | [`GLOSSARY.md`](GLOSSARY.md) | The key entities the tools in this repository concern. |
 | [`CAPABILITIES.md`](CAPABILITIES.md) | The JSON Schema capabilities the expectations use, each with its demo in [`json-schema-demos`](https://github.com/CIRSS/json-schema-demos). |
 | [`REVIEWS.md`](REVIEWS.md) | Who has reviewed each file, at what level of detail. |
+| [`demo/`](demo) | Demos of checking particular expectations. |
 
 ## Building this REPRO
 
@@ -106,4 +107,4 @@ make run-in-repro CMD='bash check-image'
 
 Put a `<name>.schema.json` in [`exports/`](exports), list it in
 [`exports/base-manifest`](exports/base-manifest), and assign it to a tier in
-[`exports/tiers.json`](exports/tiers.json).
+[`exports/tiers.json`](exports/tiers.json). Include a demo in [`demo/`](demo).
