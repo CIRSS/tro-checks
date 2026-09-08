@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://w3id.org/trace/tro/0.1/hash-form.schema.json",
     "title": "Hash form",
-    "description": "Every hash in the declaration names its algorithm and carries a value of the right shape for it. A hash is how an artifact is identified by content, so a malformed one cannot be compared with anything. Looks where the declaration format puts hashes: on each composed artifact, and on the composition fingerprint.",
+    "description": "Every hash in the declaration names its algorithm and carries a value of the right shape for it.",
     "type": "object",
     "properties": {
         "@graph": {

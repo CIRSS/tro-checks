@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://w3id.org/trace/tro/0.1/has-well-formed-context.schema.json",
+    "title": "Has a well-formed context",
+    "description": "Where a document carries an @context, its value must be null, a string naming an external context, a context object, or an array of those.",
+    "properties": {
+        "@context": {
+            "type": ["null", "string", "object", "array"],
+            "items": {
+                "type": ["null", "string", "object"],
+                "errorMessage": {
+                    "type": "every member of an @context array is null, a string, or a context object"
+                }
+            },
+            "errorMessage": {
+                "type": "an @context is null, a string, a context object, or an array of those"
+            }
+        }
+    }
+}

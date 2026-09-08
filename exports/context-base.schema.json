@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://w3id.org/trace/tro/0.1/context-base.schema.json",
     "title": "Context base",
-    "description": "The @context declares an @base. A TRO declaration identifies its parts with relative @id values, which resolve against the document's base; with none declared, the base is wherever the document happens to sit, so the identifiers change when it moves.",
+    "description": "The @context declares an @base.",
     "type": "object",
     "required": ["@context"],
     "properties": {

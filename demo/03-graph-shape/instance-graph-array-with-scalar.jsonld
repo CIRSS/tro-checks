@@ -1,0 +1,7 @@
+{
+    "@context": {},
+    "@graph": [
+        { "@id": "https://example.org/thing/1" },
+        "https://example.org/thing/2"
+    ]
+}

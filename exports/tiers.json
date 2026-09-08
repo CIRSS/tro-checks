@@ -2,7 +2,9 @@
     "0": {
         "name": "Well-Formed",
         "expectations": [
-            "is-a-node-object-or-an-array-of-them"
+            "has-well-formed-context",
+            "has-well-formed-graph",
+            "is-node-object-or-array-of-them"
         ]
     },
     "1": {

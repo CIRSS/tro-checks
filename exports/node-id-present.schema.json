@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://w3id.org/trace/tro/0.1/node-id-present.schema.json",
     "title": "Node id present",
-    "description": "Every node object is expected to carry an explicit @id. A node object with no @id becomes a blank node: the processor mints a label scoped to one parse, which nothing in the document text names and nothing outside it can reference.",
+    "description": "Every node object carries an explicit @id.",
     "$defs": {
         "isNodeObject": {
             "type": "object",
@@ -39,6 +39,5 @@
             "else": { "$ref": "#/$defs/node" }
         }
     },
-    "$comment": "The outermost object of a document carrying @graph is a document object, not a node object, and needs no @id of its own. Everything inside it is swept.",
     "$ref": "#/$defs/documentRoot"
 }

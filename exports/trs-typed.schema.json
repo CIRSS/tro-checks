@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://w3id.org/trace/tro/0.1/trs-typed.schema.json",
     "title": "TRS typed",
-    "description": "The system that assembled the TRO is typed trov:TrustedResearchSystem. Position locates the node in the JSON, and this schema uses it to get there; the graph has no positions, so the type is the only thing in the document saying what kind of node it is.",
+    "description": "The system that assembled the TRO is typed trov:TrustedResearchSystem.",
     "type": "object",
     "properties": {
         "@graph": {

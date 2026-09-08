@@ -1,22 +1,22 @@
 ##############################################################################
 #
-#   tro-checks  ·  demo 01: is-node-object-or-array-of-them (Tier 0)
+#   tro-checks  ·  demo 02: has-well-formed-context (Tier 0)
 #
 ##############################################################################
 
------ [1] expectation met: the document is a node object ---------------------
+----- [1] expectation met: the @context value is a string --------------------
 
-$ report_on instance-node-object.jsonld
+$ report_on instance-context-string.jsonld
 {
-    "@id": "https://example.org/thing/1",
-    "@type": "https://example.org/Thing"
+    "@context": "https://w3id.org/trace/tro/0.1/context.jsonld",
+    "@graph": []
 }
 
-wrote tmp/instance-node-object.md; Tier 0 met
+wrote tmp/instance-context-string.md; Tier 0 met
 
 # Report
 
-Candidate: `instance-node-object.jsonld`
+Candidate: `instance-context-string.jsonld`
 
 Target: Tier 0 -- Well-Formed (declared)
 
@@ -46,16 +46,19 @@ Every expectation in the target was put to `jsonschema-validate` and `ajv-valida
 
 ### node-id-present (Tier 2): not claimed
 
------ [2] expectation unmet: the document is a string ------------------------
+----- [2] expectation unmet: the @context value is a number ------------------
 
-$ report_on instance-string.jsonld
-"a document whose whole content is one string"
+$ report_on instance-context-number.jsonld
+{
+    "@context": 5,
+    "@graph": []
+}
 
-wrote tmp/instance-string.md; Tier 0 unmet
+wrote tmp/instance-context-number.md; Tier 0 unmet
 
 # Report
 
-Candidate: `instance-string.jsonld`
+Candidate: `instance-context-number.jsonld`
 
 Target: Tier 0 -- Well-Formed (declared)
 
@@ -67,23 +70,23 @@ Target: Tier 0 -- Well-Formed (declared)
 
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 
-### has-well-formed-context (Tier 0): met
-
-### has-well-formed-graph (Tier 0): met
-
-### is-node-object-or-array-of-them (Tier 0): unmet
+### has-well-formed-context (Tier 0): unmet
 
 `jsonschema-validate`:
 
 ```
-INVALID: a JSON-LD document is a node object, or an array of node objects
+INVALID: /@context: an @context is null, a string, a context object, or an array of those
 ```
 
 `ajv-validate`:
 
 ```
-INVALID: a JSON-LD document is a node object, or an array of node objects
+INVALID: /@context: an @context is null, a string, a context object, or an array of those
 ```
+
+### has-well-formed-graph (Tier 0): met
+
+### is-node-object-or-array-of-them (Tier 0): met
 
 ### composition-fingerprint (Tier 1): not claimed
 
@@ -97,19 +100,22 @@ INVALID: a JSON-LD document is a node object, or an array of node objects
 
 ### node-id-present (Tier 2): not claimed
 
------ [3] expectation met: every member of the array is a node object --------
+----- [3] expectation met: every member of the @context array is a string or a context object -----
 
-$ report_on instance-array-of-node-objects.jsonld
-[
-    { "@id": "https://example.org/thing/1" },
-    { "@id": "https://example.org/thing/2" }
-]
+$ report_on instance-context-array.jsonld
+{
+    "@context": [
+        "https://w3id.org/trace/tro/0.1/context.jsonld",
+        { "ex": "https://example.org/" }
+    ],
+    "@graph": []
+}
 
-wrote tmp/instance-array-of-node-objects.md; Tier 0 met
+wrote tmp/instance-context-array.md; Tier 0 met
 
 # Report
 
-Candidate: `instance-array-of-node-objects.jsonld`
+Candidate: `instance-context-array.jsonld`
 
 Target: Tier 0 -- Well-Formed (declared)
 
@@ -139,19 +145,22 @@ Every expectation in the target was put to `jsonschema-validate` and `ajv-valida
 
 ### node-id-present (Tier 2): not claimed
 
------ [4] expectation unmet: a member of the array is a string ---------------
+----- [4] expectation unmet: a member of the @context array is a number ------
 
-$ report_on instance-array-with-scalar.jsonld
-[
-    { "@id": "https://example.org/thing/1" },
-    "not a node object"
-]
+$ report_on instance-context-array-with-number.jsonld
+{
+    "@context": [
+        "https://w3id.org/trace/tro/0.1/context.jsonld",
+        5
+    ],
+    "@graph": []
+}
 
-wrote tmp/instance-array-with-scalar.md; Tier 0 unmet
+wrote tmp/instance-context-array-with-number.md; Tier 0 unmet
 
 # Report
 
-Candidate: `instance-array-with-scalar.jsonld`
+Candidate: `instance-context-array-with-number.jsonld`
 
 Target: Tier 0 -- Well-Formed (declared)
 
@@ -163,23 +172,23 @@ Target: Tier 0 -- Well-Formed (declared)
 
 Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 
-### has-well-formed-context (Tier 0): met
-
-### has-well-formed-graph (Tier 0): met
-
-### is-node-object-or-array-of-them (Tier 0): unmet
+### has-well-formed-context (Tier 0): unmet
 
 `jsonschema-validate`:
 
 ```
-INVALID: /1: every member of a JSON-LD document written as an array is a node object
+INVALID: /@context/1: every member of an @context array is null, a string, or a context object
 ```
 
 `ajv-validate`:
 
 ```
-INVALID: /1: every member of a JSON-LD document written as an array is a node object
+INVALID: /@context/1: every member of an @context array is null, a string, or a context object
 ```
+
+### has-well-formed-graph (Tier 0): met
+
+### is-node-object-or-array-of-them (Tier 0): met
 
 ### composition-fingerprint (Tier 1): not claimed
 

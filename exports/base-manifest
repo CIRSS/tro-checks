@@ -2,7 +2,9 @@ base-setup
 check-tro check-tro.js
 check-tros check-tros.js
 tiers.json
-is-a-node-object-or-an-array-of-them.schema.json
+is-node-object-or-array-of-them.schema.json
+has-well-formed-context.schema.json
+has-well-formed-graph.schema.json
 tro-minimal.schema.json
 context-base.schema.json
 node-id-present.schema.json
