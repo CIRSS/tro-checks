@@ -16,11 +16,10 @@ wrote tmp/instance-node-object.md; Tier 0 met
 
 # Report
 Candidate: `instance-node-object.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: met
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
@@ -41,22 +40,14 @@ wrote tmp/instance-string.md; Tier 0 unmet
 
 # Report
 Candidate: `instance-string.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: unmet
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): unmet
-`jsonschema-validate`:
-```
-INVALID: a JSON-LD document is a node object, or an array of node objects
-```
-`ajv-validate`:
-```
-INVALID: a JSON-LD document is a node object, or an array of node objects
-```
+- the document found `"a document whose whole content is one string"` — a JSON-LD document is a node object, or an array of node objects
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed
@@ -77,11 +68,10 @@ wrote tmp/instance-array-of-node-objects.md; Tier 0 met
 
 # Report
 Candidate: `instance-array-of-node-objects.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: met
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
@@ -105,22 +95,14 @@ wrote tmp/instance-array-with-scalar.md; Tier 0 unmet
 
 # Report
 Candidate: `instance-array-with-scalar.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: unmet
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): unmet
-`jsonschema-validate`:
-```
-INVALID: /1: every member of a JSON-LD document written as an array is a node object
-```
-`ajv-validate`:
-```
-INVALID: /1: every member of a JSON-LD document written as an array is a node object
-```
+- `/1` found `"not a node object"` — every member of a JSON-LD document written as an array is a node object
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
 ### tro-minimal (Tier 1): not claimed

@@ -71,10 +71,17 @@ make build-reports
 
 One report per candidate is written to `reports/<name>.md`.
 
-`check-tros` takes a candidate's target from its manifest entry, or tier 1 where
-the entry names none. `--target` overrides the manifest, for every candidate in
-the run. The report labels a target `(declared)`, except the default, which it
-labels `(assumed)`.
+A report gives one assessment per targeted tier, then one finding per
+expectation. Under an unmet finding it lists for each underlying error its
+location in the candidate, the value found there, and how it failed to meet an
+expectation. Every expectation is put to every validator, and is unmet if any
+of them rejects the candidate. The report lists every error any validator
+reported, once, and names no validator.
+
+`check-tros` takes a target tier from the manifest provided with a candidate and
+assumes tier 1 is targeted when the manifest names none. `--target` overrides
+the manifest, for every candidate in the run. The report labels the target
+with where it came from: the manifest, the `--target` option, or the default.
 
 ## Key files
 
@@ -82,13 +89,19 @@ labels `(assumed)`.
 | --- | --- |
 | [`exports/check-tro.js`](exports/check-tro.js) | The checker. Applies the expectations in a candidate's target and writes the report. Installed as `check-tro`. |
 | [`exports/check-tros.js`](exports/check-tros.js) | Runs the checker over the candidates the manifest names, each at its own target, writing `reports/<name>.md` for each. Installed as `check-tros`. |
-| [`exports/tiers.json`](exports/tiers.json) | Which expectations belong to which tier, and each tier's name. An expectation listed in no tier stops the run. |
+| [`exports/render-report.js`](exports/render-report.js) | Writes the report from a candidate's findings and assessments. Supplies functions used by the checker; not a command. |
+| [`exports/types.js`](exports/types.js) | The checker's entities as types the editor can check — the glossary's candidate, tier, finding and assessment — and the shape of a validator's report entry. Not a command. |
+| [`exports/tiers.json`](exports/tiers.json) | Which expectations belong to which tier, and each tier's name. An expectation file in `exports/` that `tiers.json` lists under no tier stops every run rather than being silently skipped. |
 | [`GLOSSARY.md`](GLOSSARY.md) | The key entities the tools in this repository concern. |
 | [`CAPABILITIES.md`](CAPABILITIES.md) | The JSON Schema capabilities the expectations use, each with its demo in [`json-schema-demos`](https://github.com/CIRSS/json-schema-demos). |
 | [`REVIEWS.md`](REVIEWS.md) | Who has reviewed each file, at what level of detail. |
 | [`demo/`](demo) | Demos of checking particular expectations. |
 
 ## Building this REPRO
+
+`make test-code` checks the checker's JavaScript against the type annotations
+in its comments, with the configuration in `jsconfig.json` that the editor also
+reads. A field renamed in one file and not in another fails there.
 
 Requires Git, Docker and GNU Make.
 

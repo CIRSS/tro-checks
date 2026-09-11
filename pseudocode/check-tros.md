@@ -20,7 +20,7 @@
 
 **The program builds a candidate from each entry.**
 - It settles the candidate's tier — the one given on the command line, the one its entry names, or tier 1.
-- It records whether that tier was named or assumed.
+- It records where the tier came from — the command line, the manifest, or the default.
 - It names the candidate's report after the candidate.
 
 **The program makes the reports directory, if it is not already there.**

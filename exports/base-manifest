@@ -1,6 +1,8 @@
 base-setup
 check-tro check-tro.js
 check-tros check-tros.js
+render-report.js
+types.js
 tiers.json
 node-rooted.schema.json
 has-well-formed-context.schema.json

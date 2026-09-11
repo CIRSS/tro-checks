@@ -16,11 +16,10 @@ wrote tmp/instance-context-string.md; Tier 0 met
 
 # Report
 Candidate: `instance-context-string.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: met
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
@@ -44,20 +43,12 @@ wrote tmp/instance-context-number.md; Tier 0 unmet
 
 # Report
 Candidate: `instance-context-number.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: unmet
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): unmet
-`jsonschema-validate`:
-```
-INVALID: /@context: an @context is null, a string, a context object, or an array of those
-```
-`ajv-validate`:
-```
-INVALID: /@context: an @context is null, a string, a context object, or an array of those
-```
+- `/@context` found `5` — an @context is null, a string, a context object, or an array of those
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
@@ -83,11 +74,10 @@ wrote tmp/instance-context-array.md; Tier 0 met
 
 # Report
 Candidate: `instance-context-array.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: met
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
@@ -114,20 +104,12 @@ wrote tmp/instance-context-array-with-number.md; Tier 0 unmet
 
 # Report
 Candidate: `instance-context-array-with-number.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: unmet
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): unmet
-`jsonschema-validate`:
-```
-INVALID: /@context/1: every member of an @context array is null, a string, or a context object
-```
-`ajv-validate`:
-```
-INVALID: /@context/1: every member of an @context array is null, a string, or a context object
-```
+- `/@context/1` found `5` — every member of an @context array is null, a string, or a context object
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed

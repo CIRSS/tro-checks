@@ -65,3 +65,14 @@
 {"kind":"review","path":"pseudocode/check-tro.md","blob":"6aef4fbbd4ccdcdad5df5166a31e61a8879bdc49","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
 {"kind":"review","path":"README.md","blob":"802d10af742bb2a16bece9c4b0be382f8d5f3049","by":"Timothy McPhillips","date":"2026-09-07","type":"careful"}
 {"kind":"review","path":"repro-config","blob":"1d39bec4193bc8c92afd45f738b713556b9770bf","by":"Timothy McPhillips","date":"2026-09-07","type":"cursory"}
+{"kind":"review","path":"README.md","blob":"15d07808497c1c6c26e3347b63f377520c488f79","by":"Timothy McPhillips","date":"2026-09-10","type":"careful"}
+{"kind":"review","path":"demo/01-root-shape/run.txt","blob":"f74b336b5c832b5a3322d350bd3e1b7f5f0f0613","by":"Timothy McPhillips","date":"2026-09-10","type":"cursory"}
+{"kind":"review","path":"demo/02-context-shape/run.txt","blob":"e0a486d3d5c9e54824cd0a5bb0a0758861de87a9","by":"Timothy McPhillips","date":"2026-09-10","type":"cursory"}
+{"kind":"review","path":"demo/03-graph-shape/run.txt","blob":"3bb6b0d3dc111c6a2ad510df795c67992a226755","by":"Timothy McPhillips","date":"2026-09-10","type":"cursory"}
+{"kind":"review","path":"demo/04-trov-terms/run.txt","blob":"c1ae791248d2205b3aae0b3da1693eb9d62c3155","by":"Timothy McPhillips","date":"2026-09-10","type":"cursory"}
+{"kind":"review","path":"exports/base-manifest","blob":"5fefa714f589a845b921e7fe27d5880bdddb5f3b","by":"Timothy McPhillips","date":"2026-09-10","type":"cursory"}
+{"kind":"review","path":"exports/render-report.js","blob":"b4099aae9d22d8323ccd0d9fe7bb51144d902898","by":"Timothy McPhillips","date":"2026-09-11","type":"cursory"}
+{"kind":"review","path":"exports/check-tro.js","blob":"cee363f635869f17d0a8046f276efa57abcd780e","by":"Timothy McPhillips","date":"2026-09-11","type":"cursory"}
+{"kind":"review","path":"exports/check-tros.js","blob":"66b9165d5ba307a8eed27e136d04c18ae5d2266b","by":"Timothy McPhillips","date":"2026-09-11","type":"cursory"}
+{"kind":"review","path":"exports/types.js","blob":"e5598bcc405fe3ce87a4abb92ce09547a58d5e04","by":"Timothy McPhillips","date":"2026-09-11","type":"cursory"}
+{"kind":"review","path":"exports/render-report.js","blob":"ff15e9cdd2cda68c9fcc6b856abde163b971e466","by":"Timothy McPhillips","date":"2026-09-11","type":"cursory"}

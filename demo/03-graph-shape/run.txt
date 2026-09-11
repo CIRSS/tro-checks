@@ -16,11 +16,10 @@ wrote tmp/instance-graph-node-object.md; Tier 0 met
 
 # Report
 Candidate: `instance-graph-node-object.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: met
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
@@ -44,21 +43,13 @@ wrote tmp/instance-graph-string.md; Tier 0 unmet
 
 # Report
 Candidate: `instance-graph-string.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: unmet
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): unmet
-`jsonschema-validate`:
-```
-INVALID: /@graph: an @graph holds a node object, or an array of node objects
-```
-`ajv-validate`:
-```
-INVALID: /@graph: an @graph holds a node object, or an array of node objects
-```
+- `/@graph` found `"https://example.org/thing/1"` — an @graph holds a node object, or an array of node objects
 ### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
@@ -83,11 +74,10 @@ wrote tmp/instance-graph-array.md; Tier 0 met
 
 # Report
 Candidate: `instance-graph-array.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: met
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): met
 ### node-rooted (Tier 0): met
@@ -114,21 +104,13 @@ wrote tmp/instance-graph-array-with-scalar.md; Tier 0 unmet
 
 # Report
 Candidate: `instance-graph-array-with-scalar.jsonld`
-Target: Tier 0 -- Well-Formed (declared)
+Target: Tier 0 -- Well-Formed (assigned via --target option)
 ## Assessment
 - Tier 0 -- Well-Formed: unmet
 ## Findings
-Every expectation in the target was put to `jsonschema-validate` and `ajv-validate`.
 ### has-well-formed-context (Tier 0): met
 ### has-well-formed-graph (Tier 0): unmet
-`jsonschema-validate`:
-```
-INVALID: /@graph/1: every member of an @graph array is a node object
-```
-`ajv-validate`:
-```
-INVALID: /@graph/1: every member of an @graph array is a node object
-```
+- `/@graph/1` found `"https://example.org/thing/2"` — every member of an @graph array is a node object
 ### node-rooted (Tier 0): met
 ### composition-fingerprint (Tier 1): not claimed
 ### hash-form (Tier 1): not claimed
